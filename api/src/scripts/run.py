@@ -53,7 +53,6 @@ def random_colour_masks(image):
   r = np.zeros_like(image).astype(np.uint8)
   g = np.zeros_like(image).astype(np.uint8)
   b = np.zeros_like(image).astype(np.uint8)
-  print(r)
   r[image == 0], g[image == 0], b[image == 0] = [255,255,255]
   coloured_mask = np.stack([r, g, b], axis=2)
   return coloured_mask
@@ -63,12 +62,13 @@ def instance_segmentation_api(img_path, name, threshold=0.5, rect_th=3, text_siz
   masks, boxes, pred_cls = get_prediction(img_path, threshold)
   img = cv2.imread(img_path)
   img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+  label_classes = args.list.split(',')
   for i in range(len(masks)):
-    #if pred_cls[i] == args.class:
-    rgb_mask = random_colour_masks(masks[i])
-    img = cv2.addWeighted(img, 1, rgb_mask, 1, 0)
-    #cv2.rectangle(img, boxes[i][0], boxes[i][1],color=(0, 255, 0), thickness=rect_th)
-    cv2.putText(img,pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX, text_size, (0,255,0),thickness=text_th)
+    if pred_cls[i] in label_classes:
+        rgb_mask = random_colour_masks(masks[i])
+        img = cv2.addWeighted(img, 1, rgb_mask, 1, 0)
+        #cv2.rectangle(img, boxes[i][0], boxes[i][1],color=(0, 255, 0), thickness=rect_th)
+        cv2.putText(img,pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX, text_size, (0,255,0),thickness=text_th)
   plt.figure(figsize=(20,30))
   plt.imshow(img)
   plt.savefig(os.path.join(args.output, name) + '.png')
@@ -76,7 +76,7 @@ def instance_segmentation_api(img_path, name, threshold=0.5, rect_th=3, text_siz
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', type=str, default="/home/gauss/Pictures/Wallpapers/wallpaper.jpg")
-parser.add_argument('--class', type=str, default="human")
+parser.add_argument('-l', '--list', help='Add a list of desired classes', type=str, default="person,cat")
 #parser.add_argument('--image_path', type=str, default="/home/gauss/Pictures/Wallpapers")
 parser.add_argument('--output', type=str, default="./output/")
 args = parser.parse_args()
