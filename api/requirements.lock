@@ -1,0 +1,26 @@
+torch==1.2.0
+connexion==2.3.0
+Flask==1.1.1
+Flask-Cors==3.0.8
+uWSGI==2.0.18
+uwsgitop==0.11
+requests==2.22.0
+tqdm==4.35.0
+## The following requirements were added by pip freeze:
+certifi==2019.6.16
+chardet==3.0.4
+Click==7.0
+clickclick==1.2.2
+idna==2.8
+inflection==0.3.1
+itsdangerous==1.1.0
+Jinja2==2.10.1
+jsonschema==2.6.0
+MarkupSafe==1.1.1
+numpy==1.17.1
+openapi-spec-validator==0.2.8
+PyYAML==5.1.2
+six==1.12.0
+swagger-ui-bundle==0.0.5
+urllib3==1.25.3
+Werkzeug==0.15.5
