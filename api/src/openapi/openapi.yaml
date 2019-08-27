@@ -1,0 +1,71 @@
+openapi: '3.0.0'
+
+info:
+  description: Cut an object of an image typing its name built in PyTorch Summer Hackathon
+  version: '1.0'
+  title: ObjectCut API
+
+servers:
+  - url: http://localhost:8081
+    description: Development endpoint.
+
+tags:
+  - name: image
+    description: endpoint for processing images.
+
+paths:
+  /cut:
+    post:
+      tags:
+        - image
+      summary: Cuts an object of an image given its name and the image itself.
+      description: Invoke this endpoint to cut an object of an image.
+      operationId: src.api.cut.post
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  description: List of objects to cut.
+                  items:
+                    type: string
+                image_url:
+                  type: string
+                  description: Internet accessible URL of an image.
+                image_base64:
+                  type: string
+                  description: URL and filename - safe base64(url) encoded image.
+      responses:
+        200:
+          description: Standard ObjectCut API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+components:
+  schemas:
+    APIResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          description: Whether or not the request was successfully processed or not.
+        message:
+          type: string
+          description: Error message if the request was unsuccessful.
+        response:
+          type: object
+          description: Contains the response data if the request was successful.
