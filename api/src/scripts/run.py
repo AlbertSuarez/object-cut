@@ -71,8 +71,8 @@ def instance_segmentation_api(img_path, name, threshold=0.5, rect_th=3, text_siz
     cv2.putText(img,pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX, text_size, (0,255,0),thickness=text_th)
   plt.figure(figsize=(20,30))
   plt.imshow(img)
+  plt.savefig(os.path.join(args.output, name) + '.png')
   plt.show()
-  plt.imwrite(os.path.join(args.output, name) + '.png')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--image', type=str, default="/home/gauss/Pictures/Wallpapers/wallpaper.jpg")
