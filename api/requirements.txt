@@ -1,4 +1,8 @@
-torch
+torchvision
+opencv-python
+numpy
+matplotlib
+Pillow
 connexion[swagger-ui]
 Flask
 Flask-Cors
