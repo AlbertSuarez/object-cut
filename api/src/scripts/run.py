@@ -61,7 +61,7 @@ def instance_segmentation_api(image_path, threshold=0.5, rect_th=3, text_size=3,
                 )
     plt.figure(figsize=(20, 30))
     plt.imshow(img)
-    plt.savefig(f'{image_path.split(".")[:-1]}_output.png')
+    plt.savefig(f'{".".join(image_path.split(".")[:-1])}_output.png')
     plt.show()
 
 
