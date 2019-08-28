@@ -16,6 +16,7 @@ def _parse_args():
     parser.add_argument('--list', help='Add a list of desired classes', nargs='+', type=str, required=True)
     parser.add_argument('--bounding_box', action='store_true')
     parser.add_argument('--with_text', action='store_true')
+    parser.add_argument('--show_result', action='store_true')
     return parser.parse_args()
 
 
@@ -62,7 +63,8 @@ def instance_segmentation_api(image_path, threshold=0.5, rect_th=3, text_size=3,
     plt.figure(figsize=(20, 30))
     plt.imshow(img)
     plt.savefig(f'{".".join(image_path.split(".")[:-1])}_output.png')
-    plt.show()
+    if args.show_result:
+        plt.show()
 
 
 if __name__ == '__main__':
