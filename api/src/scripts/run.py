@@ -67,6 +67,7 @@ def instance_segmentation_api(image_path, threshold=0.5, rect_th=3, text_size=3,
     plt.savefig(image_path_output, bbox_inches='tight')
     if args.show_result:
         plt.show()
+    return image_path_output
 
 
 if __name__ == '__main__':
