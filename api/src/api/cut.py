@@ -11,7 +11,7 @@ def post():
     if not all(x in body for x in required_parameters):
         return jsonify(make_response(True, message=f'{required_parameters} body parameters are required.')), 400
 
-    if not all(o in OBJECT_LIST for o in body['objects']):
+    if not all(o in COCO_INSTANCE_CATEGORY_NAMES for o in body['objects']):
         return jsonify(make_response(True, message='One or more objects from the list will not be detected.')), 400
 
     if bool('image_url' in body) == bool('image_base64' in body):
