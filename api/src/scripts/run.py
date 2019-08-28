@@ -21,7 +21,7 @@ def _parse_args():
 
 
 def _get_prediction(img_path, threshold):
-    img = Image.open(img_path)
+    img = Image.open(img_path).convert('RGB')
     transform = torch_transform.Compose([torch_transform.ToTensor()])
     img = transform(img)
     prediction = model([img])
@@ -61,8 +61,10 @@ def instance_segmentation_api(image_path, threshold=0.5, rect_th=3, text_size=3,
                     text_size, (0, 255, 0), thickness=text_th
                 )
     plt.figure(figsize=(20, 30))
+    plt.axis('off')
     plt.imshow(img)
-    plt.savefig(f'{".".join(image_path.split(".")[:-1])}_output.png')
+    image_path_output = f'{".".join(image_path.split(".")[:-1])}_output.png'
+    plt.savefig(image_path_output, bbox_inches='tight')
     if args.show_result:
         plt.show()
 
