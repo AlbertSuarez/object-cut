@@ -1,7 +1,10 @@
-torch
-torchvision
-scipy
-Pillow
-numpy
 fastapi
 requests
+scipy
+numpy
+scikit-image
+Pillow
+torch==1.4.0
+torchvision==0.5.0
+opencv-python
+scipy

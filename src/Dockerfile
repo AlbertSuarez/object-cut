@@ -1,21 +1,42 @@
-FROM python:3.8.1
-
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /usr/src/engine
 
 # copy requirements file
 COPY ./requirements.txt /usr/src/app/requirements.txt
 
+# install dependencies
+RUN apt-get update   
+RUN apt-get install -y --no-install-recommends \
+	software-properties-common \
+	build-essential \
+	python3 \
+	python3-dev \
+	python3-pip \
+	python3-setuptools \
+	cmake \
+	git \
+	wget \
+	libatlas-base-dev \
+	libboost-all-dev \
+	libgflags-dev \
+	libgoogle-glog-dev \
+	libhdf5-serial-dev \
+	libleveldb-dev \
+	liblmdb-dev \
+	libopencv-dev \
+	libprotobuf-dev \
+	libsnappy-dev \
+	protobuf-compiler \
+	libnvinfer5
+
 # environment variable to avoid writing .pyc files
 ENV PYTHONDONTWRITEBYTECODE 1 
 
-# install dependencies
-RUN set -eux \
-    && apt-get update \
-    && apt-get install -y  build-base \
-        python3-dev \
-    && pip install --upgrade pip setuptools wheel \
-    && pip install -r /usr/src/app/requirements.txt \
+RUN python3 -m pip install pip --upgrade
+RUN pip3 install --upgrade --force-reinstall wheel
+RUN pip3 install -r /usr/src/app/requirements.txt \
     && rm -rf /root/.cache/pip
 
 # PILLOW
