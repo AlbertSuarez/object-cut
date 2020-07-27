@@ -1,9 +1,12 @@
-import uuid
 import base64
+import uuid
+
+import numpy as np
 import requests
 from PIL import Image
+
 from src import *
-import numpy as np
+
 
 def download(image_url):
     """
@@ -14,8 +17,8 @@ def download(image_url):
     output_path = None
     response = requests.get(image_url, timeout=15)
     if response.ok:
-        output_path = f'{DATA_FOLDER}/{uuid.uuid4()}.png'
-        with open(output_path, 'wb') as f:
+        output_path = f"{DATA_FOLDER}/{uuid.uuid4()}.png"
+        with open(output_path, "wb") as f:
             f.write(response.content)
     return output_path
 
@@ -36,8 +39,8 @@ def encode(output_image_path):
     :param output_image_path: Image path.
     :return: Encoded image.
     """
-    with open(output_image_path, 'rb') as image_file:
-        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+    with open(output_image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
     return encoded_string
 
 
@@ -62,7 +65,7 @@ def remove_white(image_path):
     :return: Image saved without white color.
     """
     with Image.open(image_path) as img:
-        img = img.convert('RGBA')
+        img = img.convert("RGBA")
 
         new_data = []
         for item in img.getdata():
@@ -72,7 +75,7 @@ def remove_white(image_path):
                 new_data.append(item)
 
         img.putdata(new_data)
-        img.save(image_path, format='PNG', quality=95)
+        img.save(image_path, format="PNG", quality=95)
 
 
 def get_resize_dimensions(original_size, dimensions):
@@ -88,4 +91,3 @@ def get_resize_dimensions(original_size, dimensions):
         return int(dim_x), int(img_y * (dim_x / (img_x * 1.0)))
     else:
         return int(img_x * (dim_y / (img_y * 1.0))), int(dim_y)
-

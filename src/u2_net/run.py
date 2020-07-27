@@ -1,18 +1,17 @@
-import cv2
 import time
-import torch
 import warnings
-import numpy as np
 
+import cv2
+import numpy as np
+import torch
 from PIL import Image
 from scipy import ndimage
 from torch.autograd import Variable
 from torchvision import transforms
 
+from src.u2_net.data_loader import RescaleT, ToTensorLab
 from src.utils import log
 from src.utils.image_utils import decode
-from src.u2_net.data_loader import RescaleT
-from src.u2_net.data_loader import ToTensorLab
 
 
 def _load_img(image):
@@ -56,7 +55,7 @@ def define_model(model, model_path, gpu):
         if torch.cuda.is_available():
             net.cuda()
     else:
-        net.load_state_dict(torch.load(model_path, map_location='cpu'))
+        net.load_state_dict(torch.load(model_path, map_location="cpu"))
     net.eval()
     return net
 
@@ -102,10 +101,10 @@ def run(net, image, remove_white_bg):
     :param remove_white_bg: Boolean that shows if we have to remove white background or not
     :return: The image processed.
     """
-    warnings.simplefilter('ignore', UserWarning)
+    warnings.simplefilter("ignore", UserWarning)
     image_original = decode(image)
     sample = _load_img(image_original)
-    inputs_test = sample['image'].unsqueeze(0)
+    inputs_test = sample["image"].unsqueeze(0)
     inputs_test = inputs_test.type(torch.FloatTensor)
     # Inference
     try:
@@ -137,24 +136,25 @@ def run(net, image, remove_white_bg):
         prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
         prediction = unsharp_mask(prediction, amount=3.0)
         # put alpha
-        mask = Image.fromarray(prediction).convert('L')
+        mask = Image.fromarray(prediction).convert("L")
         if remove_white_bg:
-            background = Image.new('RGB', mask.size, (255, 255, 255))
+            background = Image.new("RGB", mask.size, (255, 255, 255))
         else:
-            background = Image.new('RGBA', mask.size, (255, 255, 255,0))
+            background = Image.new("RGBA", mask.size, (255, 255, 255, 0))
 
         # Generate output image with the mask
-        image_original = Image.fromarray(image_original * 255).convert('RGB')
+        image_original = Image.fromarray(image_original * 255).convert("RGB")
         output_image = Image.composite(image_original, background, mask)
-        output_image = output_image.resize((image_original.width, image_original.height), resample=Image.LANCZOS)
+        output_image = output_image.resize(
+            (image_original.width, image_original.height), resample=Image.LANCZOS
+        )
 
         # Clean
         del d1, d2, d3, d4, d5, d6, d7
 
         total_time = (time.time() - start_time) * 1000.0
-        log.info('{:.2f}ms'.format(total_time))
+        log.info("{:.2f}ms".format(total_time))
         return output_image
 
     except Exception as e:
-        log.error('Error [{}]'.format(e))
-
+        log.error("Error [{}]".format(e))

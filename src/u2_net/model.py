@@ -4,11 +4,12 @@ import torch.nn.functional as func
 
 
 class REBNCONV(nn.Module):
-
     def __init__(self, in_ch=3, out_ch=3, dirate=1):
         super(REBNCONV, self).__init__()
 
-        self.conv_s1 = nn.Conv2d(in_ch, out_ch, 3, padding=1 * dirate, dilation=1 * dirate)
+        self.conv_s1 = nn.Conv2d(
+            in_ch, out_ch, 3, padding=1 * dirate, dilation=1 * dirate
+        )
         self.bn_s1 = nn.BatchNorm2d(out_ch)
         self.relu_s1 = nn.ReLU(inplace=True)
 
@@ -19,7 +20,6 @@ class REBNCONV(nn.Module):
 
 
 class RSU7(nn.Module):
-
     def __init__(self, in_ch=3, mid_ch=12, out_ch=3):
         super(RSU7, self).__init__()
 
@@ -51,7 +51,7 @@ class RSU7(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
+        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -98,7 +98,6 @@ class RSU7(nn.Module):
 
 
 class RSU6(nn.Module):
-
     def __init__(self, in_ch=3, mid_ch=12, out_ch=3):
         super(RSU6, self).__init__()
 
@@ -126,7 +125,7 @@ class RSU6(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
+        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -168,7 +167,6 @@ class RSU6(nn.Module):
 
 
 class RSU5(nn.Module):
-
     def __init__(self, in_ch=3, mid_ch=12, out_ch=3):
         super(RSU5, self).__init__()
 
@@ -192,7 +190,7 @@ class RSU5(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
+        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -228,7 +226,6 @@ class RSU5(nn.Module):
 
 
 class RSU4(nn.Module):
-
     def __init__(self, in_ch=3, mid_ch=12, out_ch=3):
         super(RSU4, self).__init__()
 
@@ -248,7 +245,7 @@ class RSU4(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
+        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -278,7 +275,6 @@ class RSU4(nn.Module):
 
 
 class RSU4F(nn.Module):
-
     def __init__(self, in_ch=3, mid_ch=12, out_ch=3):
         super(RSU4F, self).__init__()
 
@@ -314,7 +310,6 @@ class RSU4F(nn.Module):
 
 
 class U2NET(nn.Module):
-
     def __init__(self, in_ch=3):
         super(U2NET, self).__init__()
 
@@ -349,11 +344,11 @@ class U2NET(nn.Module):
         self.side5 = nn.Conv2d(512, 1, 3, padding=1)
         self.side6 = nn.Conv2d(512, 1, 3, padding=1)
 
-        self.upscore6 = nn.Upsample(scale_factor=32, mode='bilinear')
-        self.upscore5 = nn.Upsample(scale_factor=16, mode='bilinear')
-        self.upscore4 = nn.Upsample(scale_factor=8, mode='bilinear')
-        self.upscore3 = nn.Upsample(scale_factor=4, mode='bilinear')
-        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
+        self.upscore6 = nn.Upsample(scale_factor=32, mode="bilinear")
+        self.upscore5 = nn.Upsample(scale_factor=16, mode="bilinear")
+        self.upscore4 = nn.Upsample(scale_factor=8, mode="bilinear")
+        self.upscore3 = nn.Upsample(scale_factor=4, mode="bilinear")
+        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
 
         self.outconv = nn.Conv2d(6, 1, 1)
 
@@ -420,13 +415,17 @@ class U2NET(nn.Module):
         d0 = self.outconv(torch.cat((d1, d2, d3, d4, d5, d6), 1))
 
         return (
-            func.sigmoid(d0), func.sigmoid(d1), func.sigmoid(d2), func.sigmoid(d3),
-            func.sigmoid(d4), func.sigmoid(d5), func.sigmoid(d6)
+            func.sigmoid(d0),
+            func.sigmoid(d1),
+            func.sigmoid(d2),
+            func.sigmoid(d3),
+            func.sigmoid(d4),
+            func.sigmoid(d5),
+            func.sigmoid(d6),
         )
 
 
 class U2NETP(nn.Module):
-
     def __init__(self, in_ch=3):
         super(U2NETP, self).__init__()
 
@@ -461,11 +460,11 @@ class U2NETP(nn.Module):
         self.side5 = nn.Conv2d(64, 1, 3, padding=1)
         self.side6 = nn.Conv2d(64, 1, 3, padding=1)
 
-        self.upscore6 = nn.Upsample(scale_factor=32, mode='bilinear')
-        self.upscore5 = nn.Upsample(scale_factor=16, mode='bilinear')
-        self.upscore4 = nn.Upsample(scale_factor=8, mode='bilinear')
-        self.upscore3 = nn.Upsample(scale_factor=4, mode='bilinear')
-        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
+        self.upscore6 = nn.Upsample(scale_factor=32, mode="bilinear")
+        self.upscore5 = nn.Upsample(scale_factor=16, mode="bilinear")
+        self.upscore4 = nn.Upsample(scale_factor=8, mode="bilinear")
+        self.upscore3 = nn.Upsample(scale_factor=4, mode="bilinear")
+        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
 
         self.outconv = nn.Conv2d(6, 1, 1)
 
@@ -533,6 +532,11 @@ class U2NETP(nn.Module):
         d0 = self.outconv(torch.cat((d1, d2, d3, d4, d5, d6), 1))
 
         return (
-            func.sigmoid(d0), func.sigmoid(d1), func.sigmoid(d2), func.sigmoid(d3),
-            func.sigmoid(d4), func.sigmoid(d5), func.sigmoid(d6)
+            func.sigmoid(d0),
+            func.sigmoid(d1),
+            func.sigmoid(d2),
+            func.sigmoid(d3),
+            func.sigmoid(d4),
+            func.sigmoid(d5),
+            func.sigmoid(d6),
         )

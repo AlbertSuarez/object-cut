@@ -11,8 +11,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 # install dependencies
 RUN set -eux \
-    && apk add --no-cache --virtual .build-deps build-base \
-        libressl-dev libffi-dev gcc musl-dev python3-dev \
+    && apt-get update \
+    && apt-get install -y  build-base \
+        python3-dev \
     && pip install --upgrade pip setuptools wheel \
     && pip install -r /usr/src/app/requirements.txt \
     && rm -rf /root/.cache/pip

@@ -1,7 +1,6 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
-
 __logger = logging.getLogger("covigilant_API")
 
 __formatter = logging.Formatter(
@@ -9,7 +8,9 @@ __formatter = logging.Formatter(
 )
 
 
-__handler_file = RotatingFileHandler("engine.log", maxBytes=(1048576 * 5), backupCount=7)
+__handler_file = RotatingFileHandler(
+    "engine.log", maxBytes=(1048576 * 5), backupCount=7
+)
 __handler_file.setFormatter(__formatter)
 __logger.addHandler(__handler_file)
 __logger.setLevel(logging.INFO)
