@@ -1,4 +1,5 @@
 fastapi
+uvicorn
 requests
 scipy
 numpy
