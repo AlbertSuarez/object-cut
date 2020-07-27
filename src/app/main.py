@@ -22,9 +22,9 @@ app.add_middleware(
 )
 
 # Load model
-model_path = os.path.join("models", "Model.u2net.name.pth")
+model_path = os.path.join("app", "data", "u2net.pth")
 log.info("Model path: [{}]".format(model_path))
-net = define_model(Model[Model.u2net.name], model_path, gpu=True)
+net = define_model(Model[Model.u2net.name], model_path, gpu=False)
 log.info("Model loaded")
 
 
@@ -36,7 +36,7 @@ def health_check():
 @app.post("/predict", response_model=EngineResponse, tags=["predictions"])
 def predict(request: EngineRequest):
     try:
-        result = run(net, request.image, request.remove_white, gpu=True)
+        result = run(net, request.image, request.remove_white, gpu=False)
         log.info("Generating image")
         return {
             "image_cropped": result,
