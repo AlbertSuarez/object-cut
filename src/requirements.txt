@@ -1,0 +1,7 @@
+torch
+torchvision
+scipy
+Pillow
+numpy
+fastapi
+requests
