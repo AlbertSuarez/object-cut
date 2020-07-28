@@ -18,7 +18,9 @@ docker-compose up -d --build
 ```
 Run inference on an image.
 ```bash
-TODO
+curl --location --request POST 'localhost/predict' \
+--header 'Content-Type: application/json' \
+--data-raw '{"img": BASE_64_IMG, "remove_white":false}'
 ```
 
 ### API documentation
@@ -30,6 +32,6 @@ Go to http://localhost/docs
 - [x] Structured API
 - [ ] Finish and test that everything works
 - [ ] Create logic about GPU
-- [ ] Set examples for the schemas and improve API documentation (in general)
+
 
 
