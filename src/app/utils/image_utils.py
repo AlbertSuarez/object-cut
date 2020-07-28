@@ -1,6 +1,6 @@
 import base64
 import uuid
-
+import cv2
 import numpy as np
 import requests
 from PIL import Image
@@ -29,8 +29,10 @@ def decode(image_base64):
     :param image_base64: Encoded image.
     :return: numpy array representing the image
     """
-    image_data = base64.b64decode(image_base64)
-    return np.frombuffer(image_data, dtype=np.float64)
+    img = base64.urlsafe_b64decode(image_base64.encode(encoding='utf-8'))
+    img= np.frombuffer(img, dtype=np.float64)
+    img = cv2.imdecode(img, flags=1)
+    return img
 
 
 def encode(output_image_path):

@@ -11,18 +11,12 @@ class RescaleT(object):
         self.output_size = output_size
 
     def __call__(self, sample):
-        imidx, image, label = sample["imidx"], sample["image"], sample["label"]
-        img = transform.resize(
-            image, (self.output_size, self.output_size), mode="constant"
-        )
-        lbl = transform.resize(
-            label,
-            (self.output_size, self.output_size),
-            mode="constant",
-            order=0,
-            preserve_range=True,
-        )
-        return dict(imidx=imidx, image=img, label=lbl)
+        image, label = sample["image"], sample["label"]
+
+        img = transform.resize(image, (self.output_size, self.output_size), mode='constant')
+        lbl = transform.resize(label, (self.output_size, self.output_size), mode='constant', order=0,
+                               preserve_range=True)
+        return {'image': img, 'label': lbl}
 
 
 class ToTensorLab(object):
@@ -32,7 +26,7 @@ class ToTensorLab(object):
     # noinspection PyUnresolvedReferences
     def __call__(self, sample):
 
-        imidx, image, label = sample["imidx"], sample["image"], sample["label"]
+        image, label = sample["image"], sample["label"]
 
         temp_label = np.zeros(label.shape)
 
@@ -40,7 +34,6 @@ class ToTensorLab(object):
             label = label
         else:
             label = label / np.max(label)
-
         # Change the color space
         if self.flag == 2:  # With RGB and Lab colors
             tmp_image = np.zeros((image.shape[0], image.shape[1], 6))
@@ -113,7 +106,6 @@ class ToTensorLab(object):
             tmp_image[:, :, 2] = (tmp_image[:, :, 2] - np.min(tmp_image[:, :, 2])) / (
                 np.max(tmp_image[:, :, 2]) - np.min(tmp_image[:, :, 2])
             )
-
             tmp_image[:, :, 0] = (
                 tmp_image[:, :, 0] - np.mean(tmp_image[:, :, 0])
             ) / np.std(tmp_image[:, :, 0])
@@ -143,7 +135,6 @@ class ToTensorLab(object):
         temp_label = label.transpose((2, 0, 1))
 
         return dict(
-            imidx=torch.from_numpy(imidx),
             image=torch.from_numpy(tmp_image),
             label=torch.from_numpy(temp_label),
         )

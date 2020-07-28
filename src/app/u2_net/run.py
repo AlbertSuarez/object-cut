@@ -33,11 +33,9 @@ def _load_img(image):
     elif 2 == len(image.shape) and 2 == len(label.shape):
         image = image[:, :, np.newaxis]
         label = label[:, :, np.newaxis]
-
     sample = dict(image=image, label=label)
-    transforms.Compose([RescaleT(320), ToTensorLab(flag=0)])
-    sample = transforms(sample)
-
+    transform = transforms.Compose([RescaleT(320), ToTensorLab(flag=0)])
+    sample = transform(sample)
     return sample
 
 
@@ -102,21 +100,19 @@ def run(net, image, remove_white_bg):
     :return: The image processed.
     """
     warnings.simplefilter("ignore", UserWarning)
-    image_original = decode(image)
-    sample = _load_img(image_original)
+    sample = _load_img(image)
     inputs_test = sample["image"].unsqueeze(0)
     inputs_test = inputs_test.type(torch.FloatTensor)
     # Inference
+    log.info('Starting inference')
     try:
         start_time = time.time()
         if torch.cuda.is_available():
             inputs_test = Variable(inputs_test.cuda())
         else:
             inputs_test = Variable(inputs_test)
-
         # Inference
         d1, d2, d3, d4, d5, d6, d7 = net(inputs_test)
-
         # Normalize
         prediction = d1[:, 0, :, :]
         prediction = _normalize_prediction(prediction)
@@ -132,10 +128,12 @@ def run(net, image, remove_white_bg):
         prediction[idx] = 0
 
         # SHARPENING ALGORITHM
-        prediction = cv2.erode(prediction, np.ones((5, 5), np.uint8), iterations=1)
-        prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
-        prediction = unsharp_mask(prediction, amount=3.0)
+        #prediction = cv2.erode(prediction, np.ones((5, 5), np.uint8), iterations=1)
+        #prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
+        #prediction = unsharp_mask(prediction, amount=3.0)
         # put alpha
+        image_original = Image.fromarray(image * 255).convert("RGB")
+        prediction = cv2.resize(prediction, dsize=image_original.size, interpolation=cv2.INTER_LANCZOS4)
         mask = Image.fromarray(prediction).convert("L")
         if remove_white_bg:
             background = Image.new("RGB", mask.size, (255, 255, 255))
@@ -143,7 +141,6 @@ def run(net, image, remove_white_bg):
             background = Image.new("RGBA", mask.size, (255, 255, 255, 0))
 
         # Generate output image with the mask
-        image_original = Image.fromarray(image_original * 255).convert("RGB")
         output_image = Image.composite(image_original, background, mask)
         output_image = output_image.resize(
             (image_original.width, image_original.height), resample=Image.LANCZOS

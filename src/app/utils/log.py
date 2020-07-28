@@ -1,3 +1,4 @@
+import sys
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -14,6 +15,14 @@ __handler_file = RotatingFileHandler(
 __handler_file.setFormatter(__formatter)
 __logger.addHandler(__handler_file)
 __logger.setLevel(logging.INFO)
+
+
+
+__handler_stdout = logging.StreamHandler(sys.stdout)
+__handler_stdout.setFormatter(__formatter)
+__logger.addHandler(__handler_stdout)
+__logger.setLevel(logging.INFO)
+__logger.propagate = False
 
 
 def debug(msg):

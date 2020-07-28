@@ -7,5 +7,5 @@ class EngineRequest(BaseModel):
 
 
 class EngineResponse(BaseModel):
-    image_cropped: str
+    img_cropped: str
     message: str
