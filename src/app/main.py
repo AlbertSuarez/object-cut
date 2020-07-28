@@ -1,7 +1,6 @@
 import os
-import base64
+import uuid
 
-from io import BytesIO
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
@@ -10,8 +9,6 @@ from app.u2_net.run import define_model, run
 from app.u2_net.model_enum import Model
 from app.utils.image_utils import decode
 from app.utils import log
-
-
 
 
 app = FastAPI()
@@ -45,14 +42,13 @@ def predict(request: EngineRequest):
     try:
         image_decoded = decode(request.img)
         result = run(net, image_decoded, request.remove_white)
+        tmp_file_name = os.path.join('results', "{}.png".format(uuid.uuid4()))
+        result.save(tmp_file_name)
 
-        buffered = BytesIO()
-        result.save(buffered, format="PNG")
-        img_str = base64.b64encode(buffered.getvalue())
 
-        log.info("Generating image")
+        log.info("Image cropped saved in:{}".format(tmp_file_name))
         return {
-            "img_cropped": img_str,
+            "img_cropped": tmp_file_name,
             "message": "Your image has been processed succesfully.",
         }
 

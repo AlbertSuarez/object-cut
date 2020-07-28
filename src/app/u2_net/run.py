@@ -5,13 +5,13 @@ import cv2
 import numpy as np
 import torch
 from PIL import Image
-from scipy import ndimage
+
 from torch.autograd import Variable
 from torchvision import transforms
 
 from app.u2_net.data_loader import RescaleT, ToTensorLab
 from app.utils import log
-from app.utils.image_utils import decode
+
 
 
 def _load_img(image):

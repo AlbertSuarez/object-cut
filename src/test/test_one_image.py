@@ -17,15 +17,12 @@ def _call_api(image_file):
 	"""
 	with open(image_file, "rb") as img_file:
 		img_string = base64.urlsafe_b64encode(img_file.read()).decode('utf-8')
-	print(img_string)
 	for i in range(0, 3):
 		try:
 			response = requests.post(
 				URL,
-				data={
-					'img': img_string,
-					'remove_white': False
-				}
+				data="{\"img\": \"{}\"\n,\n\"remove_white\":False}".format(img_string),
+				headers={'Content-Type': 'application/json'}
 			)
 			return response
 		except Exception as e:
