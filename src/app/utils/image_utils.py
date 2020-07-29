@@ -14,7 +14,7 @@ def download(image_url):
     :param image_url: Internet accessible URL.
     :return: Output path of the downloaded image.
     """
-    output_path = None
+    output_path= None
     response = requests.get(image_url, timeout=15)
     if response.ok:
         output_path = f"{DATA_FOLDER}/{uuid.uuid4()}.png"

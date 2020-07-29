@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+.DS_Store
+src/results/*
+*.png
+*.jpeg
+*.jpg
 .idea/
 *pth
 __pycache__/

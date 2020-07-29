@@ -15,13 +15,11 @@ def _call_api(image_file):
 	:param image_file: The location of the image_file.
 	:return: Response of the API
 	"""
-	with open(image_file, "rb") as img_file:
-		img_string = base64.urlsafe_b64encode(img_file.read()).decode('utf-8')
 	for i in range(0, 3):
 		try:
 			response = requests.post(
 				URL,
-				data="{\"img\": \"{}\"\n,\n\"remove_white\":False}".format(img_string),
+				data="{\"img\": \"{}\"\n,\n\"remove_white\":False}".format(image_file),
 				headers={'Content-Type': 'application/json'}
 			)
 			return response

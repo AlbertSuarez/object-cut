@@ -1,13 +1,14 @@
 import os
 import uuid
+import numpy as np
 
+from PIL import Image
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from app.models import EngineRequest, EngineResponse
 from app.u2_net.run import define_model, run
 from app.u2_net.model_enum import Model
-from app.utils.image_utils import decode
 from app.utils import log
 
 
@@ -40,8 +41,8 @@ def health_check():
 def predict(request: EngineRequest):
     log.info('Starting request')
     try:
-        image_decoded = decode(request.img)
-        result = run(net, image_decoded, request.remove_white)
+        image = np.array(Image.open(request.img).convert('RGB'))
+        result = run(net, image, request.remove_white)
         tmp_file_name = os.path.join('results', "{}.png".format(uuid.uuid4()))
         result.save(tmp_file_name)
 

@@ -99,6 +99,7 @@ def run(net, image, remove_white_bg):
     :param remove_white_bg: Boolean that shows if we have to remove white background or not
     :return: The image processed.
     """
+    image_original = Image.fromarray(np.uint8(image))
     warnings.simplefilter("ignore", UserWarning)
     sample = _load_img(image)
     inputs_test = sample["image"].unsqueeze(0)
@@ -132,7 +133,6 @@ def run(net, image, remove_white_bg):
         #prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
         #prediction = unsharp_mask(prediction, amount=3.0)
         # put alpha
-        image_original = Image.fromarray(image * 255).convert("RGB")
         prediction = cv2.resize(prediction, dsize=image_original.size, interpolation=cv2.INTER_LANCZOS4)
         mask = Image.fromarray(prediction).convert("L")
         if remove_white_bg:
