@@ -20,7 +20,7 @@ Run inference on an image.
 ```bash
 curl --location --request POST 'localhost/predict' \
 --header 'Content-Type: application/json' \
---data-raw '{"img": BASE_64_IMG, "remove_white":false}'
+--data-raw '{"img": IMAGE_PATH, "remove_white":false}'
 ```
 
 ### API documentation
