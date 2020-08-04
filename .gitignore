@@ -5,7 +5,6 @@ src/results/*
 *.jpeg
 *.jpg
 .idea/
-*pth
 __pycache__/
 *.py[cod]
 *$py.class
