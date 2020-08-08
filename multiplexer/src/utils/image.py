@@ -12,6 +12,7 @@ def download(correlation_id, image_url, output_path=None):
     Downloads an image given an Internet accessible URL.
     :param correlation_id: Unique identifier for specific request.
     :param image_url: Internet accessible URL.
+    :param output_path: Output path where the image should go.
     :return: Output path of the downloaded image.
     """
     response = requests.get(image_url, timeout=15)
@@ -38,6 +39,7 @@ def decode(correlation_id, image_base64, output_path=None):
     Decodes an encoded image in base64.
     :param correlation_id: Unique identifier for specific request.
     :param image_base64: Encoded image.
+    :param output_path: Output path where the image should go.
     :return: Output path of the decoded image.
     """
     image_data = base64.b64decode(image_base64)
