@@ -1,7 +1,6 @@
-from __future__ import division, print_function
-
 import numpy as np
 import torch
+
 from skimage import color, transform
 
 
@@ -11,7 +10,7 @@ class RescaleT(object):
         self.output_size = output_size
 
     def __call__(self, sample):
-        image, label = sample["image"], sample["label"]
+        image, label = sample['image'], sample['label']
 
         img = transform.resize(image, (self.output_size, self.output_size), mode='constant')
         lbl = transform.resize(label, (self.output_size, self.output_size), mode='constant', order=0,
@@ -26,7 +25,7 @@ class ToTensorLab(object):
     # noinspection PyUnresolvedReferences
     def __call__(self, sample):
 
-        image, label = sample["image"], sample["label"]
+        image, label = sample['image'], sample['label']
 
         temp_label = np.zeros(label.shape)
 

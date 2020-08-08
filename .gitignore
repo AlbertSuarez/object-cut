@@ -1,10 +1,4 @@
 # Byte-compiled / optimized / DLL files
-.DS_Store
-src/results/*
-*.png
-*.jpeg
-*.jpg
-.idea/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -133,3 +127,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Mac
+.DS_Store
+
+# IDE
+.idea/
+.vs
+.vscode
+
+# Test data
+test/data/
+!test/data/.gitkeep

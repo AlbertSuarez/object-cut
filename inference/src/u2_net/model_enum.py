@@ -1,6 +1,6 @@
 from enum import Enum
 
-from app.u2_net.model import U2NET, U2NETP
+from src.u2_net.model import U2NET, U2NETP
 
 
 class Model(Enum):

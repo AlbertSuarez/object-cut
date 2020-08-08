@@ -1,21 +1,51 @@
 version: '3.7'
 
 services:
-  api:
-    build: ./src
-    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
-    volumes:
-      - ./src/:/usr/src/app/
-    ports:
-      - 80:8000
-    restart: always
-    networks: 
-      - engine 
 
-# I have created a network just in case we want to add everything 
-  
+  inference:
+    container_name: object_cut_inference
+    image: object_cut_inference
+    build: inference
+    expose:
+      - 80
+    volumes:
+      - '/tmp:/tmp'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - './inference/data:/srv/engine/inference/data'
+    networks:
+      - object_cut
+    restart: always
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=object_cut'
+      - 'traefik.http.routers.inference.entrypoints=http'
+      - 'traefik.http.routers.inference.rule=Host(`inference`)'
+      - 'traefik.http.routers.inference-secure.tls=true'
+      - 'traefik.http.routers.inference-secure.entrypoints=https'
+      - 'traefik.http.routers.inference-secure.rule=Host(`inference`)'
+      - 'traefik.http.services.inference.loadbalancer.server.port=80'
+      - 'traefik.http.services.inference.loadbalancer.healthcheck.path=/stillalive'
+      - 'traefik.http.services.inference.loadbalancer.healthcheck.interval=10s'
+      - 'traefik.http.services.inference.loadbalancer.healthcheck.timeout=5s'
+      - 'traefik.http.services.inference.loadbalancer.healthcheck.hostname=inference'
+
+  traefik:
+    container_name: object_cut_router
+    image: traefik:v2.1
+    command: --configFile=/srv/engine/traefik/traefik.yaml
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - './traefik:/srv/engine/traefik:ro'
+    networks:
+      - object_cut
+    restart: always
+    labels:
+      - 'traefik.enable=false'
   
 networks:
-    engine:
-      external:
-        name: engine
+  object_cut:
+    name: object_cut
+    driver: bridge

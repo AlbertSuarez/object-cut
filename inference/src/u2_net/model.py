@@ -51,7 +51,7 @@ class RSU7(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
+        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -125,7 +125,7 @@ class RSU6(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
+        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -190,7 +190,7 @@ class RSU5(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
+        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -245,7 +245,7 @@ class RSU4(nn.Module):
         self.rebnconv2d = REBNCONV(mid_ch * 2, mid_ch, dirate=1)
         self.rebnconv1d = REBNCONV(mid_ch * 2, out_ch, dirate=1)
 
-        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
+        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
 
     # noinspection PyUnresolvedReferences
     def forward(self, x):
@@ -344,11 +344,11 @@ class U2NET(nn.Module):
         self.side5 = nn.Conv2d(512, 1, 3, padding=1)
         self.side6 = nn.Conv2d(512, 1, 3, padding=1)
 
-        self.upscore6 = nn.Upsample(scale_factor=32, mode="bilinear")
-        self.upscore5 = nn.Upsample(scale_factor=16, mode="bilinear")
-        self.upscore4 = nn.Upsample(scale_factor=8, mode="bilinear")
-        self.upscore3 = nn.Upsample(scale_factor=4, mode="bilinear")
-        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
+        self.upscore6 = nn.Upsample(scale_factor=32, mode='bilinear')
+        self.upscore5 = nn.Upsample(scale_factor=16, mode='bilinear')
+        self.upscore4 = nn.Upsample(scale_factor=8, mode='bilinear')
+        self.upscore3 = nn.Upsample(scale_factor=4, mode='bilinear')
+        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
 
         self.outconv = nn.Conv2d(6, 1, 1)
 
@@ -460,11 +460,11 @@ class U2NETP(nn.Module):
         self.side5 = nn.Conv2d(64, 1, 3, padding=1)
         self.side6 = nn.Conv2d(64, 1, 3, padding=1)
 
-        self.upscore6 = nn.Upsample(scale_factor=32, mode="bilinear")
-        self.upscore5 = nn.Upsample(scale_factor=16, mode="bilinear")
-        self.upscore4 = nn.Upsample(scale_factor=8, mode="bilinear")
-        self.upscore3 = nn.Upsample(scale_factor=4, mode="bilinear")
-        self.upscore2 = nn.Upsample(scale_factor=2, mode="bilinear")
+        self.upscore6 = nn.Upsample(scale_factor=32, mode='bilinear')
+        self.upscore5 = nn.Upsample(scale_factor=16, mode='bilinear')
+        self.upscore4 = nn.Upsample(scale_factor=8, mode='bilinear')
+        self.upscore3 = nn.Upsample(scale_factor=4, mode='bilinear')
+        self.upscore2 = nn.Upsample(scale_factor=2, mode='bilinear')
 
         self.outconv = nn.Conv2d(6, 1, 1)
 
