@@ -2,6 +2,32 @@ version: '3.7'
 
 services:
 
+  multiplexer:
+    container_name: object_cut_multiplexer
+    image: object_cut_multiplexer
+    build: multiplexer
+    expose:
+      - 80
+    volumes:
+      - '/tmp:/tmp'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    networks:
+      - object_cut
+    restart: always
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=object_cut'
+      - 'traefik.http.routers.multiplexer.entrypoints=http'
+      - 'traefik.http.routers.multiplexer.rule=Host(`multiplexer`)'
+      - 'traefik.http.routers.multiplexer-secure.tls=true'
+      - 'traefik.http.routers.multiplexer-secure.entrypoints=https'
+      - 'traefik.http.routers.multiplexer-secure.rule=Host(`multiplexer`)'
+      - 'traefik.http.services.multiplexer.loadbalancer.server.port=80'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.path=/stillalive'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.interval=10s'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.timeout=5s'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.hostname=multiplexer'
+
   inference:
     container_name: object_cut_inference
     image: object_cut_inference

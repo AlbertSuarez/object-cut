@@ -137,5 +137,5 @@ dmypy.json
 .vscode
 
 # Test data
-test/data/
-!test/data/.gitkeep
+multiplexer/test/data/
+!multiplexer/test/data/.gitkeep

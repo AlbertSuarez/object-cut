@@ -1,0 +1,159 @@
+openapi: 3.0.1
+
+info:
+  title: ObjectCut API
+  description: ObjectCut API
+  contact:
+    email: contact@objectcut.com
+  version: "1.0"
+
+  x-logo:
+    url: 'https://avatars1.githubusercontent.com/u/68817885?s=200&v=4'
+    altText: ObjectCut Logo.
+
+externalDocs:
+  description: RapidAPI API.
+  url: https://rapidapi.com/object-cut/api/background-removal
+
+servers:
+  - url: https://rapidapi.com/objectcut
+
+tags:
+  - name: remove
+    x-displayName: Background removal
+
+paths:
+
+  /remove:
+    post:
+      tags:
+        - remove
+      summary: Remove background from images
+      description: From an input image, it returns the same image but without background.
+      operationId: src.api.remove.post
+      requestBody:
+        $ref: '#/components/requestBodies/Remove'
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        default:
+          $ref: '#/components/responses/Error'
+
+components:
+
+  requestBodies:
+
+    Remove:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              image_url:
+                $ref: '#/components/schemas/ImageURL'
+              image_base64:
+                $ref: '#/components/schemas/ImageBase64'
+              output_format:
+                $ref: '#/components/schemas/OutputFormat'
+              white_background:
+                $ref: '#/components/schemas/WhiteBackground'
+
+  responses:
+
+    Success:
+      description: Successfully request proccesed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                $ref: '#/components/schemas/Error'
+              correlation_id:
+                $ref: '#/components/schemas/CorrelationId'
+              message:
+                $ref: '#/components/schemas/Message'
+              response:
+                $ref: '#/components/schemas/Response'
+
+    Error:
+      description: Error response with some information about.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                $ref: '#/components/schemas/Message'
+
+  schemas:
+
+    ImageURL:
+      type: string
+      description: Internet accessible URL of an image.
+      example: 'https://example.com/image.jpg'
+
+    ImageBase64:
+      type: string
+      description: URL and filename - safe base64(url) encoded image.
+      example: '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgG...'
+
+    OutputFormat:
+      type: string
+      enum: ['url', 'base64']
+      description: Image format from the image result (default to URL).
+      default: url
+      example: url
+
+    WhiteBackground:
+      type: boolean
+      description: True if the background of the result image has to be white, Transpartent otherwise.
+      default: false
+      example: false
+
+    ErrorId:
+      type: string
+      enum: ['001', '002', '003']
+      example: '001'
+      description: >
+        Error message if the request was unsuccessful.
+          * 001 - An unspecified error has occurred during request processing.
+          * 002 - Image is not reachable or the URL is invalid.
+          * 003 - Invalid URL or required parameters not specified.
+
+    Error:
+      type: boolean
+      description: Unique identifier for specific request.
+      example: false
+
+    CorrelationId:
+      type: string
+      description: Unique identifier for specific request.
+      example: '02011199-9769-4999-b2c7-8d32cb17fc49'
+
+    Message:
+      type: string
+      description: Useful information (hopefully) about request.
+      example: Message
+
+    Response:
+      type: object
+      description: Details of an error if it is the scenario.
+      properties:
+        correlation_id:
+          $ref: '#/components/schemas/Message'
+        error:
+          $ref: '#/components/schemas/Error'
+        error_id:
+          $ref: '#/components/schemas/ErrorId'
+        message:
+          $ref: '#/components/schemas/Message'
+        response:
+          type: object
+          description: Reponse wrapper.
+          properties:
+            image_url:
+              $ref: '#/components/schemas/ImageURL'
+            image_base64:
+              $ref: '#/components/schemas/ImageBase64'

@@ -6,7 +6,7 @@ from PIL import Image
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src import EXAMPLE_MESSAGE_SUCCESS
+from src import EXAMPLE_MESSAGE_SUCCESS, TMP_FOLDER
 from src.models import EngineRequest, EngineResponse
 from src.u2_net.run import define_model, run
 from src.u2_net.model_enum import Model
@@ -47,7 +47,7 @@ def predict(request: EngineRequest):
 
         if result:
             # Save image
-            tmp_file_name = os.path.join(os.path.sep, 'tmp', '{}.png'.format(uuid.uuid4()))
+            tmp_file_name = os.path.join(TMP_FOLDER, '{}.png'.format(uuid.uuid4()))
             result.save(tmp_file_name)
 
             # Return

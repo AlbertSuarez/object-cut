@@ -1,0 +1,7 @@
+connexion[swagger-ui]
+Flask
+Flask-Cors
+requests
+uWSGI
+uwsgitop
+Pillow
