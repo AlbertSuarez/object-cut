@@ -19,17 +19,25 @@ git lfs fetch --all
 Deploy the whole stuck (multiplexer, inference and traefik) with just this command.
 
 ```bash
-docker-compose up -d --build
+docker-compose up -d --build --scale multiplexer=1 --scale inference=1
 ```
 
 Run inference on an image.
 
-> TODO: Pending on Multiplexer implementation
+```bash
+curl --location --request POST 'localhost:80/remove' \
+        --header 'Content-Type: application/json' \
+        --header 'Host: multiplexer' \
+        --header 'X-Secret-Access: SECRET' \
+        --data-raw '{"image_url": IMAGE_URL}'
+```
 
 
 ## Summary
 
 - [x] Deleted data Loader from original U2Net: we do not need to create a data loader to load a folder, we need to make inference to a single image
 - [x] Structured API
-- [ ] Finish and test that everything works
-- [ ] Create logic about GPU
+- [x] Finish and test that everything works
+- [x] Create logic about GPU
+- [ ] Deploy on Google Cloud with GPU
+- [ ] Implement result image upload
