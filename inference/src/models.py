@@ -11,10 +11,11 @@ class EngineRequest(BaseModel):
 
     img: str
     remove_white: bool
+    secret_access: str
 
     class Config:
         schema_extra = dict(example=dict(
-            img=EXAMPLE_IMAGE_PATH, remove_white=True
+            img=EXAMPLE_IMAGE_PATH, remove_white=True, secret_access='SECRET'
         ))
 
 

@@ -42,7 +42,7 @@ def post():
                 return make_response(correlation_id, True, error_id='002')
 
         with Timer('Hit inference module'):
-            json_body = dict(img=image_path, remove_white=white_background)
+            json_body = dict(img=image_path, remove_white=white_background, secret_access=SECRET_ACCESS)
             request_headers = dict(Host='inference')
             response = requests.post('http://traefik/predict', json=json_body, headers=request_headers)
             if response.ok:
