@@ -3,7 +3,6 @@ version: '3.7'
 services:
 
   multiplexer:
-    container_name: object_cut_multiplexer
     image: object_cut_multiplexer
     build: multiplexer
     expose:
@@ -29,7 +28,6 @@ services:
       - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.hostname=multiplexer'
 
   inference:
-    container_name: object_cut_inference
     image: object_cut_inference
     build: inference
     expose:
