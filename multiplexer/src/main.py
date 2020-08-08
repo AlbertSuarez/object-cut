@@ -18,4 +18,4 @@ CORS(flask_app)
 
 @flask_app.route('/stillalive')
 def health_check():
-    return 'API is hella working!'
+    return dict(message='API is hella working!')

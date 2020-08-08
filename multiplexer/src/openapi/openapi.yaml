@@ -16,7 +16,7 @@ externalDocs:
   url: https://rapidapi.com/object-cut/api/background-removal
 
 servers:
-  - url: https://rapidapi.com/objectcut
+  - url: http://localhost:80
 
 tags:
   - name: remove

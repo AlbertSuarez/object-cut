@@ -1,9 +1,8 @@
 import os
-import shutil
 import unittest
 import requests
 
-from src import TMP_FOLDER
+from src import SECRET_ACCESS
 from src.utils import image
 
 
@@ -11,7 +10,7 @@ class MultiplexerRemoveTest(unittest.TestCase):
 
     def setUp(self):
         self.endpoint = 'http://0.0.0.0:80/remove'
-        self.headers = dict(Host='multiplexer')
+        self.headers = {'Host': 'multiplexer', 'X-Secret-Access': SECRET_ACCESS}
         self.img_url = 'https://avatars2.githubusercontent.com/u/15660893?s=460&u=87386c900ffae1e679d806e364d17d3166db6ccb&v=4'
         self.img_folder = os.path.join('..', 'examples')
         self.timeout = 30

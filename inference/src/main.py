@@ -33,7 +33,7 @@ log.info('Model loaded')
 
 @app.get('/stillalive')
 def health_check():
-    return 'API is hella working!'
+    return dict(message='API is hella working!')
 
 
 @app.post('/predict', response_model=EngineResponse, tags=['predictions'])
