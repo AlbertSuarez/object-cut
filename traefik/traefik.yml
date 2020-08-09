@@ -1,0 +1,26 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: true
+log:
+  level: INFO
+api:
+  insecure: true
+  dashboard: true
+entryPoints:
+  http:
+    address: :80
+  https:
+    address: :443
+providers:
+  docker:
+    watch: true
+    swarmMode: false
+    network: object_cut
+certificatesResolvers:
+  lets-encr:
+    acme:
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      storage: acme.json
+      email: contact@objectcut.com
+      httpChallenge:
+        entryPoint: http

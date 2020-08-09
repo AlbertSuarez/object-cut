@@ -18,15 +18,16 @@ services:
       - 'traefik.enable=true'
       - 'traefik.docker.network=object_cut'
       - 'traefik.http.routers.multiplexer.entrypoints=http'
-      - 'traefik.http.routers.multiplexer.rule=Host(`multiplexer`)'
+      - 'traefik.http.routers.multiplexer.rule=Host(`api.objectcut.com`)'
       - 'traefik.http.routers.multiplexer-secure.tls=true'
       - 'traefik.http.routers.multiplexer-secure.entrypoints=https'
-      - 'traefik.http.routers.multiplexer-secure.rule=Host(`multiplexer`)'
+      - 'traefik.http.routers.multiplexer-secure.rule=Host(`api.objectcut.com`)'
+      - 'traefik.http.routers.multiplexer-secure.tls.certresolver=lets-encr'
       - 'traefik.http.services.multiplexer.loadbalancer.server.port=80'
       - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.path=/stillalive'
-      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.interval=10s'
-      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.timeout=5s'
-      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.hostname=multiplexer'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.interval=30s'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.timeout=10s'
+      - 'traefik.http.services.multiplexer.loadbalancer.healthcheck.hostname=api.objectcut.com'
 
   inference:
     image: object_cut_inference
@@ -45,25 +46,22 @@ services:
       - 'traefik.docker.network=object_cut'
       - 'traefik.http.routers.inference.entrypoints=http'
       - 'traefik.http.routers.inference.rule=Host(`inference`)'
-      - 'traefik.http.routers.inference-secure.tls=true'
-      - 'traefik.http.routers.inference-secure.entrypoints=https'
-      - 'traefik.http.routers.inference-secure.rule=Host(`inference`)'
       - 'traefik.http.services.inference.loadbalancer.server.port=80'
       - 'traefik.http.services.inference.loadbalancer.healthcheck.path=/stillalive'
-      - 'traefik.http.services.inference.loadbalancer.healthcheck.interval=10s'
-      - 'traefik.http.services.inference.loadbalancer.healthcheck.timeout=5s'
+      - 'traefik.http.services.inference.loadbalancer.healthcheck.interval=30s'
+      - 'traefik.http.services.inference.loadbalancer.healthcheck.timeout=10s'
       - 'traefik.http.services.inference.loadbalancer.healthcheck.hostname=inference'
 
   traefik:
     container_name: object_cut_router
     image: traefik:v2.1
-    command: --configFile=/srv/engine/traefik/traefik.yaml
     ports:
       - 80:80
       - 443:443
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      - './traefik:/srv/engine/traefik:ro'
+      - './traefik/traefik.yml:/traefik.yml:ro'
+      - './traefik/acme.json:/acme.json'
     networks:
       - object_cut
     restart: always
