@@ -77,6 +77,16 @@ Getting a response like this one:
 
 ## Development
 
+### Integrations
+
+This API integrates with several external APIs which are listed below.
+
+#### Google Cloud Storage
+
+For being able to upload the image response to a public bucket for let the users download the output, we are using GCS for doing it once the users specify that in the `output_format=url` (default value) in the API request.
+
+The integration is pretty simple. Every request is being authenticated using the service account JSON file under the `keys` folder where every output image is being upload to the `object-cut-images` bucket under a Life Cycle policy of *3 days* (this has been configured on the Google Cloud Console UI). Once the file has been uploaded (and make it public) the library itself it returns you the public URL that you can return to the user.
+
 ### How to add a new test
 
 Create a new python file on the `multiplexer` module called `test_*.py` in `test.api.*` with the following structure:
@@ -101,7 +111,7 @@ class NewTest(BaseTestClass):
 - [x] Finish and test that everything works
 - [x] Create logic about GPU (although not deploying with it).
 - [ ] Deploy on Google Cloud without GPU, at least for now
-- [ ] Implement result image upload using Google Cloud Storage
+- [x] Implement result image upload using Google Cloud Storage
 - [ ] Publish API on RapidAPI
 
 ## Authors
