@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "object-cut-engine",
+  "private_key_id": "24d10cddacd25461af2c7f8013db411389caba6e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDX1z2l5f1FZl/+\n9gLlAS+0u1HkI7yD/350AoqWQtqVmLyWvFSkNpg4bPEjAo3PRQ1AD6wiGlwWTc9S\nizvLLemS9caA8pnePkcyLD7LpkfNXAhOjpihSToMQJMtTDnDztpETcZUll35Ayp3\ni1++jqZUJxETCfPkBIvdgtxQFr9sRGsVrBphWcFMhZaMJlATebEQOdp7d2Ymk3sP\n6w0w+Mio/mbaqfXY9as3C1owd0zrVnzXgGJvZiDY1K5iyG8RBBFbnyDN4YvHOXjY\nITs/9hSnupwOuwvWap7eacJ+8go04C7e227dKIgDA+Q9MvNo+2PQJoix/SWgMjSO\n6oZTEXipAgMBAAECggEAAX9KHyGKWGQsr73pr8huC8mfv6I4fpsFm169XXpABVyi\n7WAWERxvnf3rBoVQEfXy8NvgTk1duvE2Ax+86IAuMsXVICzc3ShpjFpFqeiJp4aj\noTk1AJ1pz9YOnYaMOghTzSpFnaZ8Q52pD88d+PazlFX40UsoqI80oA89Yan0EMIE\nz9NQbcf265uOhUtrZGi0UJLujehccabKI6HXINS1EJIzHhUFIv8wOzGC6QJWfnjZ\nEIBmnvloYx7844I28CDUdG+3YTVkHw6IvHJQ4eGqHt70P9FNdOs4zWdGYoNO8bJc\nXf1AploOtj4x2SItwWPZ06E2XFnVlFJtnfnyygpvuQKBgQDx5B76L/Y7PIKe/30O\nceXWBDyvhkK5eh37PaPzzLPpVgfgXAJJIjry/Pnkv3Tk5cmxUu9QRGv3WCZ2bxMZ\nN7u1jkzEroeFmIADja6o7t1mdnZIMAg1fVsD6dCmSu70o6CZL4d3xcTMFJnZ/Ext\noLyANf9prISFwa0BETe22NG9DQKBgQDkbiQGBE4zDkXH3KheemLtEPsP5LQ16Tz2\nDssRAUC1LwZXyPDBwjciYPF1hhScr7trXzOON9mkTxJCrzszLimnNC6kjopMQfB6\nlriGoWCCF8JmBK4NgLEIgV2R860rlrU1keJzI0E5Dlh4MI4M5Fd7T5yJakjke1A1\nW/fkqcSbDQKBgB3Cgiknw3SQQkXLixg+3RcSmGDD9Oua4ZtqfwRct/nKMtfgmgtj\nYbtJcnk5MOmEd+cQHA9VC693seu6SLA+kiKJKlq8WkIOfBlz0fxIvwZ/JphFCI2E\nKbF2j8wVxgZlJzoRheovc8Hj+vW9u611LBveCNl4dyl5pY5PDvq4/Dz1AoGAShE0\neQb4XDGqiq2PomLIpNm2rmaX0Es6SwZs7aycUKNYySoMdqcEvY71fAfnsw6AFMaf\nruOJHG/PGfQ7m9LCCscuwIi/aw6ObRFl77Fv237ct7uYvCQYQwu/TU3XvqR1SVNu\nO6sYwOlX4lDMHn4Dp6YeuafOztb1IPgbHve1GhkCgYACFAPcSvljrHBAr2pQOxzU\nxaiptk7WKzCmYQJCyboswIluYKGo2aGFJdn0OX88hMY7nzwoH0lc8iIb9ktx+uJ/\nmRNizINW+e6rB3oNQWbUpSTwPtaKHpgPbBAEy9F59MRgHHnIPraZU4SijQ/hKIL2\nwa701prjQxrqeuwsKTDgQw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "storage@object-cut-engine.iam.gserviceaccount.com",
+  "client_id": "111861101319467655242",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storage%40object-cut-engine.iam.gserviceaccount.com"
+}

@@ -1,11 +1,10 @@
 import os
-import uuid
 import base64
 import requests
 
 from PIL import Image
 from src import TMP_FOLDER
-from src.utils import log
+from src.utils import log, storage
 
 
 def download(correlation_id, image_url, output_path=None):
@@ -36,7 +35,7 @@ def upload(correlation_id, output_image_path):
     :param output_image_path: Image path.
     :return: Accessible image URL
     """
-    return 'https://example.com/{}.png'.format(correlation_id)
+    return storage.upload_image(correlation_id, output_image_path)
 
 
 def decode(correlation_id, image_base64, output_path=None):
