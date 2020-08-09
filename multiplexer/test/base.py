@@ -10,7 +10,7 @@ from src.utils.timer import Timer
 class BaseTestClass(unittest.TestCase):
 
     endpoint = 'http://0.0.0.0:80/remove'
-    headers = dict(Host='multiplexer')
+    headers = dict(Host='api.objectcut.com')
     timeout = 30
 
     def hit_remove(self, json_body, secret_access=None):
