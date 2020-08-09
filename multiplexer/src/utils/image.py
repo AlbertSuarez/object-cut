@@ -5,6 +5,7 @@ import requests
 
 from PIL import Image
 from src import TMP_FOLDER
+from src.utils import log
 
 
 def download(correlation_id, image_url, output_path=None):
@@ -61,3 +62,18 @@ def encode(output_image_path):
     with open(output_image_path, 'rb') as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
     return encoded_string
+
+
+def verify(image_path):
+    """
+    Verifies if a path pointing to an actual image.
+    :param image_path: Image path to check.
+    :return: True if it's an image, False otherwise.
+    """
+    try:
+        with Image.open(image_path) as img:
+            img.verify()
+        return True
+    except Exception as e:
+        log.warn('Path [{}] does not point to an image: [{}]'.format(image_path, e))
+        return False

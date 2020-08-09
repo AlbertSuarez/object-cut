@@ -21,16 +21,9 @@ class MultiplexerRemoveTest(BaseTestClass):
     def test_base64(self):
         img_files = [os.path.join(self.img_folder, f) for f in os.listdir(self.img_folder)]
         for img in img_files:
-            # Prepare request and validate response
             image_base64 = image.encode(img)
             json_body = dict(image_base64=image_base64, output_format='base64', white_background=True)
             response = self.hit_remove(json_body, secret_access=SECRET_ACCESS)
             self.check_status_code(response)
             self.check_response(response.json())
             self.check_success(response.json())
-
-            # Post validation for moving result to test/data folder
-            response = response.json()
-            correlation_id = response['correlation_id']
-            output_path = os.path.join('test', 'data', '{}.png'.format(correlation_id))
-            image.decode(correlation_id, response['response']['image_base64'], output_path=output_path)

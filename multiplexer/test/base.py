@@ -1,8 +1,9 @@
+import os
 import unittest
-
 import requests
 
 from src import ERROR_CODES
+from src.utils import image
 from src.utils.timer import Timer
 
 
@@ -42,10 +43,19 @@ class BaseTestClass(unittest.TestCase):
                 self.assertIsInstance(response['response']['image_base64'], str)
 
     def check_success(self, response):
-        pass
+        self.assertFalse(response['error'])
+        if 'image_url' in response['response']:
+            self.assertIsNotNone(response['response']['image_url'])
+            # self.assertTrue(requests.get(response['response']['image_url']).ok)  TODO: Image upload
+        else:
+            correlation_id = response['correlation_id']
+            output_path = os.path.join('test', 'data', '{}.png'.format(correlation_id))
+            image.decode(correlation_id, response['response']['image_base64'], output_path=output_path)
+            image.verify(output_path)
 
-    def check_error(self, response):
+    def check_error(self, response, error_id):
         self.assertTrue(response['error'])
+        self.assertEqual(response['error_id'], error_id)
         self.assertEqual(ERROR_CODES[response['error_id']], response['message'])
 
     def check_status_code(self, response, status_code=200):
