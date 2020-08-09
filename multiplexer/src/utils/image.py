@@ -16,12 +16,16 @@ def download(correlation_id, image_url, output_path=None):
     :param output_path: Output path where the image should go.
     :return: Output path of the downloaded image.
     """
-    response = requests.get(image_url, timeout=15)
-    if response.ok:
-        if not output_path:
-            output_path = os.path.join(TMP_FOLDER, '{}.png'.format(correlation_id))
-        with open(output_path, 'wb') as f:
-            f.write(response.content)
+    try:
+        response = requests.get(image_url, timeout=15)
+        if response.ok:
+            if not output_path:
+                output_path = os.path.join(TMP_FOLDER, '{}.png'.format(correlation_id))
+            with open(output_path, 'wb') as f:
+                f.write(response.content)
+    except Exception as e:
+        log.warn('Error downloading [{}]: [{}]'.format(image_url, e))
+        output_path = None
     return output_path
 
 
@@ -43,13 +47,17 @@ def decode(correlation_id, image_base64, output_path=None):
     :param output_path: Output path where the image should go.
     :return: Output path of the decoded image.
     """
-    image_data = base64.b64decode(image_base64)
-    if not output_path:
-        output_path = os.path.join(TMP_FOLDER, '{}.png'.format(correlation_id))
-    with open(output_path, 'wb') as f:
-        f.write(image_data)
-    with Image.open(output_path).convert('RGBA') as img:
-        img.save(output_path, format='PNG', quality=95)
+    try:
+        image_data = base64.b64decode(image_base64)
+        if not output_path:
+            output_path = os.path.join(TMP_FOLDER, '{}.png'.format(correlation_id))
+        with open(output_path, 'wb') as f:
+            f.write(image_data)
+        with Image.open(output_path).convert('RGBA') as img:
+            img.save(output_path, format='PNG', quality=95)
+    except Exception as e:
+        log.warn('Error decoding [{}...] to [{}]: [{}]'.format(image_base64[:10], output_path, e))
+        output_path = None
     return output_path
 
 
