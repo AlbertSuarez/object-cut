@@ -1,9 +1,22 @@
 import unittest
 
+import requests
+
 from src import ERROR_CODES
+from src.utils.timer import Timer
 
 
 class BaseTestClass(unittest.TestCase):
+
+    endpoint = 'http://0.0.0.0:80/remove'
+    headers = dict(Host='multiplexer')
+    timeout = 30
+
+    def hit_remove(self, json_body, secret_access=None):
+        self.headers['X-Secret-Access'] = secret_access
+        with Timer('/remove'):
+            response = requests.post(self.endpoint, json=json_body, headers=self.headers, timeout=self.timeout)
+        return response
 
     def check_response(self, response):
         self.assertIn('correlation_id', response)
