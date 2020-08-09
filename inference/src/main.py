@@ -37,7 +37,7 @@ def health_check():
 
 
 @app.post('/predict', response_model=EngineResponse, tags=['predictions'])
-def predict(request: EngineRequest):
+async def predict(request: EngineRequest):
     log.info('Starting request...')
     try:
         # Validate request
@@ -45,7 +45,7 @@ def predict(request: EngineRequest):
             # Open image
             image = np.array(Image.open(request.img).convert('RGB'))
             # Run inference
-            result, error_message = run(net, image, request.remove_white)
+            result, error_message = await run(net, image, request.remove_white)
 
             if result:
                 # Save image

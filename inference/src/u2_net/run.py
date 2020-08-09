@@ -90,7 +90,7 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
 
 
 # noinspection PyArgumentList
-def run(net, image, remove_white_bg):
+async def run(net, image, remove_white_bg):
     """
     Run inference using U^2-Net model.
     :param net: model loaded
