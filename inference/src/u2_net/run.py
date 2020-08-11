@@ -6,11 +6,11 @@ import torch
 
 from PIL import Image
 from torch.autograd import Variable
+from scipy import ndimage
 from torchvision import transforms
 
 from src.u2_net.data_loader import RescaleT, ToTensorLab
 from src.utils import log
-
 
 def _load_img(image):
     """
@@ -90,6 +90,7 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
 
 
 # noinspection PyArgumentList
+@torch.no_grad()
 async def run(net, image, remove_white_bg):
     """
     Run inference using U^2-Net model.
@@ -128,10 +129,12 @@ async def run(net, image, remove_white_bg):
         idx = prediction < 5
         prediction[idx] = 0
 
-        # Different Sharpening algorithm
-        # prediction = cv2.erode(prediction, np.ones((5, 5), np.uint8), iterations=1)
-        # prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
-        # prediction = unsharp_mask(prediction, amount=3.0)
+        # Sharpening algorithm
+        #kernel = np.ones((2, 2), np.uint8)
+        #prediction = cv2.morphologyEx(prediction, cv2.MORPH_OPEN, kernel)
+        prediction = cv2.erode(prediction, np.ones((3, 3), np.uint8), iterations=1)
+        prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
+        prediction = unsharp_mask(prediction, amount=15.0)
 
         # Put alpha
         prediction = cv2.resize(prediction, dsize=image_original.size, interpolation=cv2.INTER_LANCZOS4)
