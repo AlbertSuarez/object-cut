@@ -12,6 +12,7 @@ from torchvision import transforms
 from src.u2_net.data_loader import RescaleT, ToTensorLab
 from src.utils import log
 
+
 def _load_img(image):
     """
     Create DataLoader instance form input path list.
@@ -130,8 +131,8 @@ async def run(net, image, remove_white_bg):
         prediction[idx] = 0
 
         # Sharpening algorithm
-        #kernel = np.ones((2, 2), np.uint8)
-        #prediction = cv2.morphologyEx(prediction, cv2.MORPH_OPEN, kernel)
+        # kernel = np.ones((2, 2), np.uint8)
+        # prediction = cv2.morphologyEx(prediction, cv2.MORPH_OPEN, kernel)
         prediction = cv2.erode(prediction, np.ones((3, 3), np.uint8), iterations=1)
         prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
         prediction = unsharp_mask(prediction, amount=15.0)
