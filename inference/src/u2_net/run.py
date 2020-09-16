@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import torch
 
-from PIL import Image
+from PIL import Image, ImageOps
 from torch.autograd import Variable
 from scipy import ndimage
 from torchvision import transforms
@@ -92,11 +92,12 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
 
 # noinspection PyArgumentList
 @torch.no_grad()
-async def run(net, image, remove_white_bg):
+async def run(net, image, return_background, remove_white_bg):
     """
     Run inference using U^2-Net model.
     :param net: model loaded
     :param image: Input image
+    :param return_background: Boolean that tells us if we have to return the background or the foreground
     :param remove_white_bg: Boolean that shows if we have to remove white background or not
     :return: The image processed.
     """
@@ -131,8 +132,6 @@ async def run(net, image, remove_white_bg):
         prediction[idx] = 0
 
         # Sharpening algorithm
-        # kernel = np.ones((2, 2), np.uint8)
-        # prediction = cv2.morphologyEx(prediction, cv2.MORPH_OPEN, kernel)
         prediction = cv2.erode(prediction, np.ones((3, 3), np.uint8), iterations=1)
         prediction = ndimage.gaussian_filter(prediction, sigma=(2, 2), order=0)
         prediction = unsharp_mask(prediction, amount=15.0)
@@ -140,6 +139,8 @@ async def run(net, image, remove_white_bg):
         # Put alpha
         prediction = cv2.resize(prediction, dsize=image_original.size, interpolation=cv2.INTER_LANCZOS4)
         mask = Image.fromarray(prediction).convert('L')
+        if return_background:
+            mask = ImageOps.invert(mask)
         if remove_white_bg:
             background = Image.new('RGB', mask.size, (255, 255, 255))
         else:
@@ -163,3 +164,6 @@ async def run(net, image, remove_white_bg):
         log.error(error_message)
         log.exception(e)
         return None, error_message
+
+
+

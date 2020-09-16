@@ -8,7 +8,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from src import EXAMPLE_MESSAGE_SUCCESS, TMP_FOLDER, SECRET_ACCESS
 from src.models import EngineRequest, EngineResponse
-from src.u2_net.run import define_model, run
+from src.u2_net.run import define_model, run, run_background
 from src.u2_net.model_enum import Model
 from src.utils import log
 
@@ -45,7 +45,39 @@ async def predict(request: EngineRequest):
             # Open image
             image = np.array(Image.open(request.img).convert('RGB'))
             # Run inference
-            result, error_message = await run(net, image, request.remove_white)
+            result, error_message = await run(net, image, False, request.remove_white)
+
+            if result:
+                # Save image
+                tmp_file_name = os.path.join(TMP_FOLDER, '{}.png'.format(uuid.uuid4()))
+                result.save(tmp_file_name)
+
+                # Return
+                log.info('Image saved in: {}'.format(tmp_file_name))
+                return dict(error=False, img=tmp_file_name, message=EXAMPLE_MESSAGE_SUCCESS)
+            else:
+                return dict(error=True, img=None, message=error_message)
+        else:
+            return dict(error=True, img=None, message='Unauthorized.')
+
+    except Exception as e:
+        error_message = 'Error on request: [{}]'.format(e)
+        log.error(error_message)
+        log.exception(e)
+        return dict(error=True, img=None, message=error_message)
+
+
+
+@app.post('/predict_background', response_model=EngineResponse, tags=['predictions'])
+async def predict(request: EngineRequest):
+    log.info('Starting request...')
+    try:
+        # Validate request
+        if request.secret_access == SECRET_ACCESS:
+            # Open image
+            image = np.array(Image.open(request.img).convert('RGB'))
+            # Run inference
+            result, error_message = await run(net, image, True, request.remove_white)
 
             if result:
                 # Save image
