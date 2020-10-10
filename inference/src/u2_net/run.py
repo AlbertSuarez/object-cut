@@ -164,6 +164,3 @@ async def run(net, image, to_remove, color_removal):
         log.error(error_message)
         log.exception(e)
         return None, error_message
-
-
-
