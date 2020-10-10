@@ -11,7 +11,7 @@ class BaseTestClass(unittest.TestCase):
 
     endpoint = 'http://0.0.0.0:80/remove'
     headers = dict(Host='api.objectcut.com')
-    timeout = 30
+    timeout = 60
 
     def hit_remove(self, json_body, secret_access=None):
         self.headers['X-Secret-Access'] = secret_access
