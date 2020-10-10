@@ -28,8 +28,8 @@ paths:
     post:
       tags:
         - remove
-      summary: Remove background from images
-      description: From an input image, it returns the same image but without background.
+      summary: Remove background or foreground from images
+      description: From an input image, it returns the same image but without background or foreground.
       operationId: src.api.remove.post
       requestBody:
         $ref: '#/components/requestBodies/Remove'
@@ -46,7 +46,7 @@ components:
     Remove:
       required: true
       content:
-        application/json:
+        application/x-www-form-urlencoded:
           schema:
             type: object
             properties:
@@ -56,8 +56,10 @@ components:
                 $ref: '#/components/schemas/ImageBase64'
               output_format:
                 $ref: '#/components/schemas/OutputFormat'
-              white_background:
-                $ref: '#/components/schemas/WhiteBackground'
+              to_remove:
+                $ref: '#/components/schemas/ToRemove'
+              color_removal:
+                $ref: '#/components/schemas/ColorRemoval'
 
   responses:
 
@@ -106,11 +108,19 @@ components:
       default: url
       example: url
 
-    WhiteBackground:
-      type: boolean
-      description: True if the background of the result image has to be white, Transpartent otherwise.
-      default: false
-      example: false
+    ToRemove:
+      type: string
+      enum: ['background', 'foreground']
+      description: Element to remove the input image result (default to background).
+      default: background
+      example: background
+
+    ColorRemoval:
+      type: string
+      enum: ['transparent', 'white']
+      description: Color from the removed or erased part (default to transparent).
+      default: transparent
+      example: transparent
 
     ErrorId:
       type: string

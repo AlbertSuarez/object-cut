@@ -92,13 +92,13 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
 
 # noinspection PyArgumentList
 @torch.no_grad()
-async def run(net, image, return_background, remove_white_bg):
+async def run(net, image, to_remove, color_removal):
     """
     Run inference using U^2-Net model.
     :param net: model loaded
     :param image: Input image
-    :param return_background: Boolean that tells us if we have to return the background or the foreground
-    :param remove_white_bg: Boolean that shows if we have to remove white background or not
+    :param to_remove: Element to remove the input image result
+    :param color_removal: Color from the removed or erased part
     :return: The image processed.
     """
     image_original = Image.fromarray(np.uint8(image))
@@ -139,9 +139,9 @@ async def run(net, image, return_background, remove_white_bg):
         # Put alpha
         prediction = cv2.resize(prediction, dsize=image_original.size, interpolation=cv2.INTER_LANCZOS4)
         mask = Image.fromarray(prediction).convert('L')
-        if return_background:
+        if to_remove == 'foreground':
             mask = ImageOps.invert(mask)
-        if remove_white_bg:
+        if color_removal == 'white':
             background = Image.new('RGB', mask.size, (255, 255, 255))
         else:
             background = Image.new('RGBA', mask.size, (255, 255, 255, 0))
