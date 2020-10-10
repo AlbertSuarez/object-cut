@@ -1,7 +1,6 @@
 import os
 import base64
 import time
-
 import requests
 
 from PIL import Image
