@@ -45,7 +45,7 @@ async def predict(request: EngineRequest):
             # Open image
             image = np.array(Image.open(request.img).convert('RGB'))
             # Run inference
-            result, error_message = await run(net, image, request.remove_white)
+            result, error_message = await run(net, image, request.to_remove, request.color_removal)
 
             if result:
                 # Save image

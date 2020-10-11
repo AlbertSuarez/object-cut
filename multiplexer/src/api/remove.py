@@ -1,4 +1,5 @@
 import os
+import time
 import uuid
 import requests
 
@@ -18,7 +19,7 @@ def post():
     correlation_id = str(uuid.uuid4())
     image_path = output_image_path = None
     try:
-        body = request.json
+        body = request.form
 
         with Timer('Validate input data'):
             if request.headers.get('X-Secret-Access') != SECRET_ACCESS:
@@ -28,7 +29,8 @@ def post():
                 return make_response(correlation_id, True, error_id='003')
 
             output_format = body.get('output_format', 'url')
-            white_background = body.get('white_background', False)
+            to_remove = body.get('to_remove', 'background')
+            color_removal = body.get('color_removal', 'transparent')
 
         with Timer('Download image'):
             if 'image_url' in body:
@@ -42,19 +44,28 @@ def post():
                 return make_response(correlation_id, True, error_id='002')
 
         with Timer('Hit inference module'):
-            json_body = dict(img=image_path, remove_white=white_background, secret_access=SECRET_ACCESS)
+            json_body = dict(
+                img=image_path, to_remove=to_remove, color_removal=color_removal, secret_access=SECRET_ACCESS
+            )
             request_headers = dict(Host='inference')
-            response = requests.post('http://traefik/predict', json=json_body, headers=request_headers)
-            if response.ok:
-                response = response.json()
-                if not response.get('error'):
-                    output_image_path = response.get('img')
-                else:
-                    log.error('Error hitting inference module: [{}]'.format(response.get('message')))
-                    return make_response(correlation_id, True, error_id='001')
-            else:
-                log.error('Error hitting inference module: Status code [{}]'.format(response.status_code))
-                return make_response(correlation_id, True, error_id='001')
+            for attempt in range(3):
+                try:
+                    response = requests.post('http://traefik/predict', json=json_body, headers=request_headers)
+                    if response.ok:
+                        response = response.json()
+                        if not response.get('error'):
+                            output_image_path = response.get('img')
+                            break
+                        else:
+                            log.error('Error hitting inference module: [{}]'.format(response.get('message')))
+                            raise ValueError
+                    else:
+                        log.error('Error hitting inference module: Status code [{}]'.format(response.status_code))
+                        raise ValueError
+                except ValueError:
+                    time.sleep(attempt + 1)
+                    if attempt >= 2:
+                        return make_response(correlation_id, True, error_id='001')
 
         with Timer('Prepare response'):
             image_url = image_base64 = None
@@ -62,6 +73,8 @@ def post():
                 image_url = image.upload(correlation_id, output_image_path)
             else:
                 image_base64 = image.encode(output_image_path)
+            if not any([image_url, image_base64]):
+                return make_response(correlation_id, True, error_id='001')
 
         return make_response(correlation_id, False, image_url=image_url, image_base64=image_base64)
 

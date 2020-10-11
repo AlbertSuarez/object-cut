@@ -1,5 +1,6 @@
 import os
 import base64
+import time
 import requests
 
 from PIL import Image
@@ -35,7 +36,13 @@ def upload(correlation_id, output_image_path):
     :param output_image_path: Image path.
     :return: Accessible image URL
     """
-    return storage.upload_image(correlation_id, output_image_path)
+    for attempt in range(3):
+        try:
+            return storage.upload_image(correlation_id, output_image_path)
+        except Exception as e:
+            time.sleep(attempt + 1)
+            log.warn(f'Error uploading image [{output_image_path}] to Storage: [{e}]')
+    return None
 
 
 def decode(correlation_id, image_base64, output_path=None):

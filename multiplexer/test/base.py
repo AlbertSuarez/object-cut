@@ -11,12 +11,12 @@ class BaseTestClass(unittest.TestCase):
 
     endpoint = 'http://0.0.0.0:80/remove'
     headers = dict(Host='api.objectcut.com')
-    timeout = 30
+    timeout = 60
 
     def hit_remove(self, json_body, secret_access=None):
         self.headers['X-Secret-Access'] = secret_access
         with Timer('/remove'):
-            response = requests.post(self.endpoint, json=json_body, headers=self.headers, timeout=self.timeout)
+            response = requests.post(self.endpoint, data=json_body, headers=self.headers, timeout=self.timeout)
         return response
 
     def check_response(self, response):
@@ -46,7 +46,7 @@ class BaseTestClass(unittest.TestCase):
         self.assertFalse(response['error'])
         if 'image_url' in response['response']:
             self.assertIsNotNone(response['response']['image_url'])
-            # self.assertTrue(requests.get(response['response']['image_url']).ok)  TODO: Image upload
+            self.assertTrue(requests.get(response['response']['image_url']).ok)
         else:
             correlation_id = response['correlation_id']
             output_path = os.path.join('test', 'data', '{}.png'.format(correlation_id))
