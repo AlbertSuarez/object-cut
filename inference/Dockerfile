@@ -35,7 +35,6 @@ RUN apt-get install -y \
 	python3-setuptools \
 	python3-pip
 ENV PYTHON_VERSION=3.7
-ENV MODEL=basnet
 
 # Add needed files
 ADD ./src ${HOME}/src
