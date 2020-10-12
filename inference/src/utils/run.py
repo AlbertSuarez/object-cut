@@ -9,7 +9,7 @@ from torch.autograd import Variable
 from scipy import ndimage
 from torchvision import transforms
 
-from src.u2_net.data_loader import RescaleT, ToTensorLab
+from src.utils.data_loader import RescaleT, ToTensorLab
 from src.utils import log
 
 
@@ -46,7 +46,7 @@ def define_model(model, model_path, gpu):
     :param gpu: If GPU is available or not.
     :return: Model instance.
     """
-    net = model.value()
+    net = model
     if gpu:
         net.load_state_dict(torch.load(model_path))
         if torch.cuda.is_available():

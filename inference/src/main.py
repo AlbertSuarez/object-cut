@@ -8,9 +8,9 @@ from starlette.middleware.cors import CORSMiddleware
 
 from src import EXAMPLE_MESSAGE_SUCCESS, TMP_FOLDER, SECRET_ACCESS
 from src.models import EngineRequest, EngineResponse
-from src.u2_net.run import define_model, run
-from src.u2_net.model_enum import Model
+from src.utils.run import define_model, run
 from src.utils import log
+from src.utils.model_enum import Model
 
 
 # Init FastAPI application
@@ -25,9 +25,9 @@ app.add_middleware(
 )
 
 # Load model
-model_path = os.path.join('data', 'u2net.pth')
+model_path = os.path.join('data', os.environ['MODEL'])
 log.info('Model path: [{}]'.format(model_path))
-net = define_model(Model[Model.u2net.name], model_path, gpu=False)
+net = define_model(Model[os.environ['MODEL']], model_path, gpu=False)
 log.info('Model loaded')
 
 

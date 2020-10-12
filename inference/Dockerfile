@@ -35,6 +35,7 @@ RUN apt-get install -y \
 	python3-setuptools \
 	python3-pip
 ENV PYTHON_VERSION=3.7
+ENV MODEL=basnet
 
 # Add needed files
 ADD ./src ${HOME}/src
@@ -51,6 +52,8 @@ RUN CC='cc -mavx2' pip3 install --upgrade --force-reinstall Pillow-SIMD==7.0.0.p
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
+# setting model to use. Note: we can choose U2NET too
+ENV MODEL=BASNet
 # Set up port to listen from Traefik
 EXPOSE 80
 
