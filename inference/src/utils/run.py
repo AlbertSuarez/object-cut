@@ -46,7 +46,7 @@ def define_model(model, model_path, gpu):
     :param gpu: If GPU is available or not.
     :return: Model instance.
     """
-    net = model.name
+    net = model.value()
     if gpu:
         net.load_state_dict(torch.load(model_path))
         if torch.cuda.is_available():

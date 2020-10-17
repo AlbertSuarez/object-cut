@@ -217,7 +217,7 @@ class RefUnet(nn.Module):
         return x + residual
 
 class BASNet(nn.Module):
-    def __init__(self,n_channels,n_classes):
+    def __init__(self,n_channels=3):
         super(BASNet,self).__init__()
 
         resnet = models.resnet34(pretrained=True)

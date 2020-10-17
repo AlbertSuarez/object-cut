@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 # Load model
-model_path = os.path.join('data', os.environ['MODEL'])
+model_path = os.path.join('data', '{}.pth'.format(os.environ['MODEL']))
 log.info('Model path: [{}]'.format(model_path))
 net = define_model(Model[os.environ['MODEL']], model_path, gpu=False)
 log.info('Model loaded')

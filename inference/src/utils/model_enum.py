@@ -6,8 +6,8 @@ from src.bas_net.model import BASNet
 
 class Model(Enum):
 
-    u2net = U2NET  # Full size version 173.6 MB
-    basnet = BASNet  # Small version u2net 4.7 MB
+    u2net = U2NET  # U2NET
+    BASNet = BASNet  # BASNet
 
     def __str__(self):
         return self.name
