@@ -6,7 +6,7 @@ from src.bas_net.model import BASNet
 
 class Model(Enum):
 
-    u2net = U2NET  # U2NET
+    U2NET = U2NET  # U2NET
     BASNet = BASNet  # BASNet
 
     def __str__(self):
