@@ -9,7 +9,7 @@ from torch.autograd import Variable
 from scipy import ndimage
 from torchvision import transforms
 
-from src.u2_net.data_loader import RescaleT, ToTensorLab
+from src.utils.data_loader import RescaleT, ToTensorLab
 from src.utils import log
 
 
@@ -116,7 +116,7 @@ async def run(net, image, to_remove, color_removal):
         else:
             inputs_test = Variable(inputs_test)
         # Inference
-        d1, d2, d3, d4, d5, d6, d7 = net(inputs_test)
+        d1 = net(inputs_test)[0]
         # Normalize
         prediction = d1[:, 0, :, :]
         prediction = _normalize_prediction(prediction)
@@ -153,7 +153,7 @@ async def run(net, image, to_remove, color_removal):
         )
 
         # Clean
-        del d1, d2, d3, d4, d5, d6, d7
+        del d1
 
         total_time = (time.time() - start_time) * 1000.0
         log.info('{:.2f}ms'.format(total_time))
