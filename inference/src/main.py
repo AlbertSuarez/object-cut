@@ -25,9 +25,11 @@ app.add_middleware(
 )
 
 # Load model
-model_path = os.path.join('data', '{}.pth'.format(os.environ['MODEL']))
+model_name = os.environ.get('MODEL', Model.BASNet.name)  # BASNet as default
+assert model_name in Model.list()
+model_path = os.path.join('data', '{}.pth'.format(model_name.lower()))
 log.info('Model path: [{}]'.format(model_path))
-net = define_model(Model[os.environ['MODEL']], model_path, gpu=False)
+net = define_model(Model[model_name], model_path, gpu=False)
 log.info('Model loaded')
 
 

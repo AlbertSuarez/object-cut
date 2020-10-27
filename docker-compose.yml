@@ -41,6 +41,8 @@ services:
     networks:
       - object_cut
     restart: always
+    environment:
+      - MODEL=BASNet  # Can also be `U2NET`
     labels:
       - 'traefik.enable=true'
       - 'traefik.docker.network=object_cut'
