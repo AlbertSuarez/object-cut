@@ -47,4 +47,4 @@ jobs:
       run: docker ps
     - name: Test with unittest
       working-directory: ./multiplexer
-      run: SECRET_ACCESS=${{ secrets.SECRET_ACCESS }} python3 -m unittest discover -v
+      run: export $(cat .env | xargs) && python3 -m unittest discover -v
