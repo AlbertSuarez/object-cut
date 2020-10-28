@@ -6,10 +6,10 @@ from PIL import Image
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src import EXAMPLE_MESSAGE_SUCCESS, TMP_FOLDER, SECRET_ACCESS
+from src import EXAMPLE_MESSAGE_SUCCESS, TMP_FOLDER
 from src.models import EngineRequest, EngineResponse
 from src.utils.run import define_model, run
-from src.utils import log
+from src.utils import log, env
 from src.utils.model_enum import Model
 
 
@@ -43,7 +43,7 @@ async def predict(request: EngineRequest):
     log.info('Starting request...')
     try:
         # Validate request
-        if request.secret_access == SECRET_ACCESS:
+        if request.secret_access == env.get_secret_access():
             # Open image
             image = np.array(Image.open(request.img).convert('RGB'))
             # Run inference

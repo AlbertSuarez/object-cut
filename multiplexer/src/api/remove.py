@@ -5,8 +5,7 @@ import requests
 
 from flask import request
 
-from src import SECRET_ACCESS
-from src.utils import image, log
+from src.utils import image, log, env
 from src.utils.response_maker import make_response
 from src.utils.timer import Timer
 
@@ -22,7 +21,7 @@ def post():
         body = request.form
 
         with Timer('Validate input data'):
-            if request.headers.get('X-Secret-Access') != SECRET_ACCESS:
+            if request.headers.get('X-Secret-Access') != env.get_secret_access():
                 return make_response(correlation_id, True, error_id='003')
 
             if bool('image_url' in body) == bool('image_base64' in body):
@@ -45,7 +44,7 @@ def post():
 
         with Timer('Hit inference module'):
             json_body = dict(
-                img=image_path, to_remove=to_remove, color_removal=color_removal, secret_access=SECRET_ACCESS
+                img=image_path, to_remove=to_remove, color_removal=color_removal, secret_access=env.get_secret_access()
             )
             request_headers = dict(Host='inference')
             for attempt in range(3):
