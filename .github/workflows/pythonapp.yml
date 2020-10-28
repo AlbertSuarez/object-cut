@@ -47,6 +47,8 @@ jobs:
         time: '10s'
     - name: Check running containers
       run: docker ps
+    - name: Check logs
+      run: docker-compose logs
     - name: Test with unittest
       working-directory: ./multiplexer
       run: export $(cat ../.env | xargs) && python3 -m unittest test.api.test_remove
