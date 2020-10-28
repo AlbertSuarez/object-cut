@@ -5,7 +5,7 @@ ENV HOME /srv/engine/inference
 
 # Install dependencies
 RUN apt-get update   
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -yq --no-install-recommends \
 	software-properties-common \
 	build-essential \
 	cmake \
@@ -29,7 +29,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 # Install Python3.7
 RUN add-apt-repository ppa:deadsnakes/ppa && apt-get update
-RUN apt-get install -y \
+RUN apt-get install -yq \
 	python3.7 \
 	python3-dev \
 	python3-setuptools \
