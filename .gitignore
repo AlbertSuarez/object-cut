@@ -143,3 +143,7 @@ multiplexer/test/data/
 # Models
 inference/data/
 !inference/data/.gitkeep
+
+# Keys
+multiplexer/keys/
+!multiplexer/keys/.gitkeep

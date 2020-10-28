@@ -10,5 +10,5 @@ ERROR_CODES_DEFAULT = ERROR_CODES['001']
 TMP_FOLDER = '/tmp'
 
 GCP_PROJECT = 'object-cut-engine'
-GCP_STORAGE_JSON = '../keys/object-cut-engine-24d10cddacd2.json'
+GCP_STORAGE_JSON = './keys/google_cloud_storage_access.json'
 GCP_STORAGE_BUCKET_NAME = 'object-cut-images'
