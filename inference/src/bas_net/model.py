@@ -264,7 +264,7 @@ class BASNet(nn.Module):
         self.bn6d_1 = nn.BatchNorm2d(512)
         self.relu6d_1 = nn.ReLU(inplace=True)
 
-        self.conv6d_m = nn.Conv2d(512, 512, 3, dilation=2, padding=2)  ###
+        self.conv6d_m = nn.Conv2d(512, 512, 3, dilation=2, padding=2)
         self.bn6d_m = nn.BatchNorm2d(512)
         self.relu6d_m = nn.ReLU(inplace=True)
 
@@ -277,7 +277,7 @@ class BASNet(nn.Module):
         self.bn5d_1 = nn.BatchNorm2d(512)
         self.relu5d_1 = nn.ReLU(inplace=True)
 
-        self.conv5d_m = nn.Conv2d(512, 512, 3, padding=1)  ###
+        self.conv5d_m = nn.Conv2d(512, 512, 3, padding=1)
         self.bn5d_m = nn.BatchNorm2d(512)
         self.relu5d_m = nn.ReLU(inplace=True)
 
@@ -290,7 +290,7 @@ class BASNet(nn.Module):
         self.bn4d_1 = nn.BatchNorm2d(512)
         self.relu4d_1 = nn.ReLU(inplace=True)
 
-        self.conv4d_m = nn.Conv2d(512, 512, 3, padding=1)  ###
+        self.conv4d_m = nn.Conv2d(512, 512, 3, padding=1)
         self.bn4d_m = nn.BatchNorm2d(512)
         self.relu4d_m = nn.ReLU(inplace=True)
 
@@ -303,7 +303,7 @@ class BASNet(nn.Module):
         self.bn3d_1 = nn.BatchNorm2d(256)
         self.relu3d_1 = nn.ReLU(inplace=True)
 
-        self.conv3d_m = nn.Conv2d(256, 256, 3, padding=1)  ###
+        self.conv3d_m = nn.Conv2d(256, 256, 3, padding=1)
         self.bn3d_m = nn.BatchNorm2d(256)
         self.relu3d_m = nn.ReLU(inplace=True)
 
@@ -317,7 +317,7 @@ class BASNet(nn.Module):
         self.bn2d_1 = nn.BatchNorm2d(128)
         self.relu2d_1 = nn.ReLU(inplace=True)
 
-        self.conv2d_m = nn.Conv2d(128, 128, 3, padding=1)  ###
+        self.conv2d_m = nn.Conv2d(128, 128, 3, padding=1)
         self.bn2d_m = nn.BatchNorm2d(128)
         self.relu2d_m = nn.ReLU(inplace=True)
 
@@ -330,7 +330,7 @@ class BASNet(nn.Module):
         self.bn1d_1 = nn.BatchNorm2d(64)
         self.relu1d_1 = nn.ReLU(inplace=True)
 
-        self.conv1d_m = nn.Conv2d(64, 64, 3, padding=1)  ###
+        self.conv1d_m = nn.Conv2d(64, 64, 3, padding=1)
         self.bn1d_m = nn.BatchNorm2d(64)
         self.relu1d_m = nn.ReLU(inplace=True)
 
@@ -338,7 +338,7 @@ class BASNet(nn.Module):
         self.bn1d_2 = nn.BatchNorm2d(64)
         self.relu1d_2 = nn.ReLU(inplace=True)
 
-        self.upscore6 = nn.Upsample(scale_factor=32, mode='bilinear')  ###
+        self.upscore6 = nn.Upsample(scale_factor=32, mode='bilinear')
         self.upscore5 = nn.Upsample(scale_factor=16, mode='bilinear')
         self.upscore4 = nn.Upsample(scale_factor=8, mode='bilinear')
         self.upscore3 = nn.Upsample(scale_factor=4, mode='bilinear')
