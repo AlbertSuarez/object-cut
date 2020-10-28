@@ -37,8 +37,15 @@ RUN apt-get install -y \
 ENV PYTHON_VERSION=3.7
 
 # Add needed files
+ADD ./data ${HOME}/data
 ADD ./src ${HOME}/src
+ADD ./gdrive_download.sh ${HOME}/gdrive_download.sh
 ADD ./requirements.lock ${HOME}/requirements.lock
+
+# Download models
+RUN ${HOME}/gdrive_download.sh 1s52ek_4YTDRt_EOkx1FS53u-vJa0c4nu ${HOME}/data/basnet.pth
+RUN ${HOME}/gdrive_download.sh 1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ ${HOME}/data/u2net.pth
+RUN ${HOME}/gdrive_download.sh 1rbSTGKAE-MTxBYHd-51l2hMOQPT_7EPy ${HOME}/data/u2netp.pth
 
 # Install dependencies
 RUN python3 -m pip install pip --upgrade

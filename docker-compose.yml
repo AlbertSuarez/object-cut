@@ -37,7 +37,6 @@ services:
     volumes:
       - '/tmp:/tmp'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      - './inference/data:/srv/engine/inference/data'
     networks:
       - object_cut
     restart: always
