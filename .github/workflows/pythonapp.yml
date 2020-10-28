@@ -47,4 +47,4 @@ jobs:
       run: docker ps
     - name: Test with unittest
       working-directory: ./multiplexer
-      run: export $(cat ../.env | xargs) && python3 -m unittest discover -v
+      run: export $(cat ../.env | xargs) && python3 -m unittest test.api.test_remove
