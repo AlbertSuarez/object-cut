@@ -139,3 +139,7 @@ dmypy.json
 # Test data
 multiplexer/test/data/
 !multiplexer/test/data/.gitkeep
+
+# Models
+inference/data/
+!inference/data/.gitkeep
