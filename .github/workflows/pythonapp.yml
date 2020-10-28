@@ -40,7 +40,7 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Deploy stack
-      run: docker-compose up -d --build --scale multiplexer=1 --scale inference=3
+      run: docker-compose up -d --build --scale multiplexer=1 --scale inference=2
     - name: Sleep
       uses: jakejarvis/wait-action@master
       with:
