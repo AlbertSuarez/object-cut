@@ -145,5 +145,6 @@ inference/data/
 !inference/data/.gitkeep
 
 # Keys
-multiplexer/keys/
-!multiplexer/keys/.gitkeep
+multiplexer/keys/*.json
+multiplexer/keys/*.tar
+!multiplexer/keys/storage_key.tar.gpg

@@ -24,9 +24,9 @@ jobs:
       run: echo "SECRET_ACCESS=${{ secrets.SECRET_ACCESS }}" >> .env
     - name: Setup Google Cloud Storage credentials
       run: |
-        echo << EOT > ./multiplexer/keys/google_cloud_storage_access.json
-        ${{ secrets.GOOGLE_CLOUD_STORAGE_ACCESS }}
-        EOT
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" \
+            --output ./multiplexer/keys/storage_key.tar ./multiplexer/keys/storage_key.tar.gpg
+        tar xvf ./multiplexer/keys/storage_key.tar -C ./multiplexer/keys
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
