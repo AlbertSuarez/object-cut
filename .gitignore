@@ -137,8 +137,10 @@ dmypy.json
 .vscode
 
 # Test data
-multiplexer/test/data/
-!multiplexer/test/data/.gitkeep
+multiplexer/test/data/*.jpg
+multiplexer/test/data/*.jpeg
+multiplexer/test/data/*.png
+!multiplexer/test/data/person.jpg
 
 # Models
 inference/data/

@@ -52,6 +52,7 @@ class BaseTestClass(unittest.TestCase):
             output_path = os.path.join('test', 'data', '{}.png'.format(correlation_id))
             image.decode(correlation_id, response['response']['image_base64'], output_path=output_path)
             image.verify(output_path)
+            os.remove(output_path)
 
     def check_error(self, response, error_id):
         self.assertTrue(response['error'])
