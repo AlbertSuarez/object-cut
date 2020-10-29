@@ -12,9 +12,25 @@
 [![GitHub forks](https://img.shields.io/github/forks/AlbertSuarez/object-cut.svg)](https://GitHub.com/AlbertSuarez/object-cut/network/)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/AlbertSuarez/object-cut.svg)](https://github.com/AlbertSuarez/object-cut)
 
-✂️ Cut the main object of an image automagically
+[Website](https://objectcut.com/) | [RapidAPI](https://rapidapi.com/objectcut.api/api/background-removal)
 
-This repository contains all the logic necessary to run the ObjectCut Engine. It also contains a simple API to run the model. 
+✂️ _Cut the main object of an image automagically_
+
+This repository contains all the logic necessary to run the ObjectCut API.
+
+## Summary
+
+Object Cut is an online image background removal service that uses [BASNet](https://github.com/NathanUA/BASNet). Removing the background from an image is a common operation in the daily work of professional photographers and image editors. This process is usually a repeatable and manual task that requires a lot of effort and human time. However, thanks to [BASNet](https://github.com/NathanUA/BASNet), one of the most robust and fastest performance deep learning models in image segmentation, Object Cut was able to turn it into an easy and automatic process. 
+
+It was built as an API to make it as easy as possible to integrate. APIs, also known as Application Programming Interfaces, are already a common way to integrate different types of solutions to improve systems without actually knowing what is happening inside. Specifically, RESTful APIs are a standard in the Software Engineering field for designing and specifying APIs. Making it substantially easier to adapt your desired APIs to your workflows.
+
+<br>
+<p align="center">
+  <img alt="Pipeline" src="docs/images/pipeline.png" width="50%"/>
+</p>
+<br>
+
+Object Cut was born to power up the designing and image editing process from the people who work with images daily. Integrating the Object Cut API removes the necessity of understanding the complex inner workings behind it and automates the process of removing the background from images in a matter of seconds.
 
 ## Requirements
 
@@ -39,8 +55,7 @@ To run the server, please execute the following from the root directory:
 2. Set up your Google Cloud Storage credentials, decrypt it using GPG with the needed passphrase and decompress it:
 
     ```bash
-    gpg --quiet --batch --yes --decrypt --passphrase="{{ GPG_PASSPHRASE }}" \
-            --output ./multiplexer/keys/storage_key.tar ./multiplexer/keys/storage_key.tar.gpg
+    gpg --quiet --batch --yes --decrypt --passphrase="{{ GPG_PASSPHRASE }}" --output ./multiplexer/keys/storage_key.tar ./multiplexer/keys/storage_key.tar.gpg
     tar xvf ./multiplexer/keys/storage_key.tar -C ./multiplexer/keys
     ```
 
