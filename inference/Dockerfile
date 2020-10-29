@@ -4,8 +4,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV HOME /srv/engine/inference
 
 # Install dependencies
-RUN apt-get update   
-RUN apt-get install -yq --no-install-recommends \
+RUN apt-get -qq update
+RUN apt-get -qq install -y --no-install-recommends \
 	software-properties-common \
 	build-essential \
 	cmake \
@@ -28,8 +28,8 @@ RUN apt-get install -yq --no-install-recommends \
 ENV PYTHONDONTWRITEBYTECODE 1 
 
 # Install Python3.7
-RUN add-apt-repository ppa:deadsnakes/ppa && apt-get update
-RUN apt-get install -yq \
+RUN add-apt-repository ppa:deadsnakes/ppa && apt-get -qq update
+RUN apt-get -qq install -y \
 	python3.7 \
 	python3-dev \
 	python3-setuptools \
