@@ -26,7 +26,7 @@ It was built as an API to make it as easy as possible to integrate. APIs, also k
 
 <br>
 <p align="center">
-  <img alt="Pipeline" src="docs/images/pipeline.png" width="50%"/>
+  <img alt="Pipeline" src="docs/images/pipeline.png" width="100%"/>
 </p>
 <br>
 
