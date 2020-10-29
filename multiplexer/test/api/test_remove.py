@@ -8,7 +8,7 @@ class MultiplexerRemoveTest(BaseTestClass):
 
     def setUp(self):
         self.secret_access = env.get_secret_access()
-        self.img_url = 'https://avatars2.githubusercontent.com/u/15660893?s=460&u=87386c900ffae1e679d806e364d17d3166db6ccb&v=4'
+        self.img_url = 'https://objectcut.com/docs/images/object-cut.png'
         self.img_url_wrong = 'https://example.com/not-existing.jpg'
         self.img_base64_wrong = 'not-a-base64'
         self.img_path = os.path.join('test', 'data', 'person.jpg')
