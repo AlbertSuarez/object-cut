@@ -5,7 +5,8 @@
 <br>
 
 [![HitCount](http://hits.dwyl.io/AlbertSuarez/object-cut.svg)](http://hits.dwyl.io/AlbertSuarez/object-cut)
-[![ObjectCut Uptime in the last 30 days](https://objectcut.com)](https://img.shields.io/uptimerobot/ratio/m785761556-2b6dc04bab1e70dd48e49042)
+![ObjectCut Uptime in the last 30 days](https://img.shields.io/uptimerobot/ratio/m785761556-2b6dc04bab1e70dd48e49042)
+![API tests](https://github.com/AlbertSuarez/object-cut/workflows/Python%20application/badge.svg)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/AlbertSuarez/object-cut)
 [![GitHub stars](https://img.shields.io/github/stars/AlbertSuarez/object-cut.svg)](https://GitHub.com/AlbertSuarez/object-cut/stargazers/)
 [![GitHub forks](https://img.shields.io/github/forks/AlbertSuarez/object-cut.svg)](https://GitHub.com/AlbertSuarez/object-cut/network/)
