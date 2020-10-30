@@ -32,6 +32,26 @@ It was built as an API to make it as easy as possible to integrate. APIs, also k
 
 Object Cut was born to power up the designing and image editing process from the people who work with images daily. Integrating the Object Cut API removes the necessity of understanding the complex inner workings behind it and automates the process of removing the background from images in a matter of seconds.
 
+<p align="center">
+  <img alt="Church input" src="docs/images/input/bird.jpg" width="45%"/>
+  <img alt="Church output" src="docs/images/output/bird.png" width="45%"/>
+</p>
+
+<p align="center">
+  <img alt="Goose input" src="docs/images/input/building.jpg" width="45%"/>
+  <img alt="Goose output" src="docs/images/output/building.png" width="45%"/>
+</p>
+
+<p align="center">
+  <img alt="Lighthouse input" src="docs/images/input/cat.jpg" width="45%"/>
+  <img alt="Lighthouse output" src="docs/images/output/cat.png" width="45%"/>
+</p>
+
+<p align="center">
+  <img alt="Person input" src="docs/images/input/kangaroo.jpg" width="45%"/>
+  <img alt="Person output" src="docs/images/output/kangaroo.png" width="45%"/>
+</p>
+
 ## Requirements
 
 1. Python 3.7+
