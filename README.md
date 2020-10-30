@@ -18,20 +18,6 @@
 
 This repository contains all the logic necessary to run the ObjectCut API.
 
-## Summary
-
-Object Cut is an online image background removal service that uses [BASNet](https://github.com/NathanUA/BASNet). Removing the background from an image is a common operation in the daily work of professional photographers and image editors. This process is usually a repeatable and manual task that requires a lot of effort and human time. However, thanks to [BASNet](https://github.com/NathanUA/BASNet), one of the most robust and fastest performance deep learning models in image segmentation, Object Cut was able to turn it into an easy and automatic process. 
-
-It was built as an API to make it as easy as possible to integrate. APIs, also known as Application Programming Interfaces, are already a common way to integrate different types of solutions to improve systems without actually knowing what is happening inside. Specifically, RESTful APIs are a standard in the Software Engineering field for designing and specifying APIs. Making it substantially easier to adapt your desired APIs to your workflows.
-
-<br>
-<p align="center">
-  <img alt="Pipeline" src="docs/images/pipeline.png" width="100%"/>
-</p>
-<br>
-
-Object Cut was born to power up the designing and image editing process from the people who work with images daily. Integrating the Object Cut API removes the necessity of understanding the complex inner workings behind it and automates the process of removing the background from images in a matter of seconds.
-
 <p align="center">
   <img alt="Church input" src="docs/images/input/bird.jpg" width="49%"/>
   <img alt="Church output" src="docs/images/output/bird.png" width="49%"/>
@@ -51,6 +37,20 @@ Object Cut was born to power up the designing and image editing process from the
   <img alt="Person input" src="docs/images/input/kangaroo.jpg" width="49%"/>
   <img alt="Person output" src="docs/images/output/kangaroo.png" width="49%"/>
 </p>
+
+## Summary
+
+Object Cut is an online image background removal service that uses [BASNet](https://github.com/NathanUA/BASNet). Removing the background from an image is a common operation in the daily work of professional photographers and image editors. This process is usually a repeatable and manual task that requires a lot of effort and human time. However, thanks to [BASNet](https://github.com/NathanUA/BASNet), one of the most robust and fastest performance deep learning models in image segmentation, Object Cut was able to turn it into an easy and automatic process. 
+
+It was built as an API to make it as easy as possible to integrate. APIs, also known as Application Programming Interfaces, are already a common way to integrate different types of solutions to improve systems without actually knowing what is happening inside. Specifically, RESTful APIs are a standard in the Software Engineering field for designing and specifying APIs. Making it substantially easier to adapt your desired APIs to your workflows.
+
+<br>
+<p align="center">
+  <img alt="Pipeline" src="docs/images/pipeline.png" width="100%"/>
+</p>
+<br>
+
+Object Cut was born to power up the designing and image editing process from the people who work with images daily. Integrating the Object Cut API removes the necessity of understanding the complex inner workings behind it and automates the process of removing the background from images in a matter of seconds.
 
 ## Requirements
 
