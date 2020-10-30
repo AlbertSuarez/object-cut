@@ -33,30 +33,30 @@ It was built as an API to make it as easy as possible to integrate. APIs, also k
 Object Cut was born to power up the designing and image editing process from the people who work with images daily. Integrating the Object Cut API removes the necessity of understanding the complex inner workings behind it and automates the process of removing the background from images in a matter of seconds.
 
 <p align="center">
-  <img alt="Church input" src="docs/images/input/bird.jpg" width="45%"/>
-  <img alt="Church output" src="docs/images/output/bird.png" width="45%"/>
+  <img alt="Church input" src="docs/images/input/bird.jpg" width="49%"/>
+  <img alt="Church output" src="docs/images/output/bird.png" width="49%"/>
 </p>
 
 <p align="center">
-  <img alt="Goose input" src="docs/images/input/building.jpg" width="45%"/>
-  <img alt="Goose output" src="docs/images/output/building.png" width="45%"/>
+  <img alt="Goose input" src="docs/images/input/building.jpg" width="49%"/>
+  <img alt="Goose output" src="docs/images/output/building.png" width="49%"/>
 </p>
 
 <p align="center">
-  <img alt="Lighthouse input" src="docs/images/input/cat.jpg" width="45%"/>
-  <img alt="Lighthouse output" src="docs/images/output/cat.png" width="45%"/>
+  <img alt="Lighthouse input" src="docs/images/input/cat.jpg" width="49%"/>
+  <img alt="Lighthouse output" src="docs/images/output/cat.png" width="49%"/>
 </p>
 
 <p align="center">
-  <img alt="Person input" src="docs/images/input/kangaroo.jpg" width="45%"/>
-  <img alt="Person output" src="docs/images/output/kangaroo.png" width="45%"/>
+  <img alt="Person input" src="docs/images/input/kangaroo.jpg" width="49%"/>
+  <img alt="Person output" src="docs/images/output/kangaroo.png" width="49%"/>
 </p>
 
 ## Requirements
 
 1. Python 3.7+
-2. Docker CE
-3. Docker-compose
+2. Docker CE 19+
+3. Docker-compose 1.27+
 
 ## Recommendations
 
@@ -110,6 +110,28 @@ _That's it_! You have ObjectCut running on port 80 routing traffic using _traefi
     ```
 
 ## Development
+
+### Change underlying model
+
+This project was built using [BASNet](https://github.com/NathanUA/BASNet) as the model for inferring the Salient Object Detection. However, in order to test other ones we added the support to select also [U^2-Net](https://github.com/NathanUA/U-2-Net), also implemented by [Xuebin Qin](https://github.com/NathanUA), in the Inference container specifying it as a environment variable called `MODEL`. You can do that setting your model name at [docker-compose.yml](docker-compose.yml):
+
+```yaml
+inference:
+    image: object_cut_inference
+    build: inference
+    env_file:
+      - .env
+    expose:
+      - 80
+    volumes:
+      - '/tmp:/tmp'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    networks:
+      - object_cut
+    restart: always
+    environment:
+      - MODEL=BASNet  # Can also be `U2NET`
+```
 
 ### Integrations
 
