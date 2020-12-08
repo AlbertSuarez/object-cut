@@ -1,7 +1,7 @@
 import argparse
 import os
+import time
 import uuid
-
 import requests
 
 from multiprocessing.dummy import Pool as ThreadPool
@@ -43,23 +43,26 @@ def _validate(input_folder, output_folder):
 
 def __process_thread(param_tuple):
     input_path, output_path, endpoint, secret_access, timeout, to_remove, color_removal = param_tuple
-    try:
-        image_base64 = image.encode(input_path)
-        headers = {'Host': 'api.objectcut.com', 'X-Secret-Access': secret_access}
-        form_data = dict(
-            image_base64=image_base64, output_format='base64',
-            to_remove=to_remove, color_removal=color_removal
-        )
-        response = requests.post(endpoint, data=form_data, headers=headers, timeout=timeout).json()
-        image.decode(str(uuid.uuid4()), response['response']['image_base64'], output_path=output_path)
-        if image.verify(output_path):
-            return True
-        else:
-            os.remove(output_path)
-            return False
-    except Exception as e:
-        log.error(f'Error with image [{input_path}]: [{e}]')
-        return False
+    for attempt in range(3):
+        try:
+            image_base64 = image.encode(input_path)
+            headers = {'Host': 'api.objectcut.com', 'X-Secret-Access': secret_access}
+            form_data = dict(
+                image_base64=image_base64, output_format='base64',
+                to_remove=to_remove, color_removal=color_removal
+            )
+            response = requests.post(endpoint, data=form_data, headers=headers, timeout=timeout).json()
+            image.decode(str(uuid.uuid4()), response['response']['image_base64'], output_path=output_path)
+            if image.verify(output_path):
+                return True
+            else:
+                os.remove(output_path)
+                return False
+        except Exception as e:
+            time.sleep(5)  # RTD for error scenarios
+            if attempt >= 2:
+                log.error(f'Error with image [{input_path}]: [{e}]')
+    return False
 
 
 def _process(
