@@ -113,7 +113,7 @@ _That's it_! You have ObjectCut running on port 80 routing traffic using _traefi
 
 ### Change underlying model
 
-This project was built using [BASNet](https://github.com/NathanUA/BASNet) as the model for inferring the Salient Object Detection. However, in order to test other ones we added the support to select also [U^2-Net](https://github.com/NathanUA/U-2-Net), also implemented by [Xuebin Qin](https://github.com/NathanUA), in the Inference container specifying it as a environment variable called `MODEL`. You can do that setting your model name at [docker-compose.yml](docker-compose.yml):
+This project was built using [BASNet](https://github.com/NathanUA/BASNet) as the model for inferring the Salient Object Detection. However, in order to test other ones we added the support to select also the different versions of [U^2-Net](https://github.com/NathanUA/U-2-Net) (`U2NET`, `U2NETP` and `U2NETPORTRAIT`), also implemented by [Xuebin Qin](https://github.com/NathanUA), in the Inference container specifying it as a environment variable called `MODEL`. You can do that setting your model name at [docker-compose.yml](docker-compose.yml):
 
 ```yaml
 inference:
@@ -130,7 +130,7 @@ inference:
       - object_cut
     restart: always
     environment:
-      - MODEL=BASNet  # Can also be `U2NET`
+      - MODEL=BASNet  # Can also be `U2NET`, `U2NETP` or `U2NETPORTRAIT`
 ```
 
 ### Integrations
