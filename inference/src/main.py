@@ -26,6 +26,7 @@ app.add_middleware(
 
 # Load model
 model_name = os.environ.get('MODEL', Model.BASNet.name)  # BASNet as default
+log.info('Model name: [{}]'.format(model_name))
 assert model_name in Model.list()
 model_path = os.path.join('data', '{}.pth'.format(model_name.lower()))
 log.info('Model path: [{}]'.format(model_path))
