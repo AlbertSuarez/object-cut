@@ -1,12 +1,14 @@
 from enum import Enum
 
-from src.u2_net.model import U2NET
+from src.u2_net.model import U2NET, U2NETP
 from src.bas_net.model import BASNet
 
 
 class Model(Enum):
 
     U2NET = U2NET  # U2NET
+    U2NETP = U2NETP  # U2NETP
+    U2NETPORTRAIT = U2NET  # U2NETPORTRAIT
     BASNet = BASNet  # BASNet
 
     def __str__(self):
@@ -14,4 +16,4 @@ class Model(Enum):
 
     @staticmethod
     def list():
-        return [m.name for m in Model]
+        return [m for m in Model.__members__.keys()]
