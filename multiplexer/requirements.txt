@@ -7,3 +7,4 @@ uwsgitop
 Pillow
 google-auth
 google-cloud-storage
+tqdm
