@@ -141,6 +141,7 @@ multiplexer/test/data/*.jpg
 multiplexer/test/data/*.jpeg
 multiplexer/test/data/*.png
 !multiplexer/test/data/person.jpg
+!multiplexer/test/data/animal-big.jpg
 
 # Models
 inference/data/
