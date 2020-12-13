@@ -3,9 +3,12 @@ import base64
 import time
 import requests
 
-from PIL import Image
+from PIL import Image, ImageFile
 from src import TMP_FOLDER
 from src.utils import log, storage
+
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def download(correlation_id, image_url, output_path=None):
@@ -91,3 +94,47 @@ def verify(image_path):
     except Exception as e:
         log.warn('Path [{}] does not point to an image: [{}]'.format(image_path, e))
         return False
+
+
+def get_dimensions(image_path):
+    """
+    Get dimensions from an image given its path.
+    :param image_path: Image path to retrieve dimensions.
+    :return: Tuple with width and height.
+    """
+    with Image.open(image_path) as img:
+        return img.size
+
+
+def resize(image_path, target_dimensions, image_format):
+    """
+    Resize image given the target dimensions, saving it in the same file.
+    :param image_path: Image path to resize.
+    :param target_dimensions: Dimensions to resize image.
+    :param image_format: Image saved format.
+    :return: Image resized saved in the same as given.
+    """
+    with Image.open(image_path) as img:
+        img = img.resize(target_dimensions, resample=Image.LANCZOS)
+        if image_format == 'PNG':
+            img = img.convert('RGBA')
+        else:
+            img = img.convert('RGB')
+        img.save(image_path, format=image_format, quality=95)
+
+
+def resize_aspect(image_path, original_dimensions, largest_size_target, image_format):
+    """
+    Resize image keeping aspect ratio, saving it in the same file.
+    :param image_path: Image path to resize.
+    :param original_dimensions: Dimensions from original image.
+    :param largest_size_target: Largest size target to resize.
+    :param image_format: Image saved format.
+    :return: Image resized saved in the same as given.
+    """
+    img_x, img_y = original_dimensions
+    if img_x >= img_y:  # e.g. 1024x768
+        target_dims = max(int(largest_size_target), 1), max(int(img_y * (largest_size_target / (img_x * 1.0))), 1)
+    else:  # e.g. 768x1024
+        target_dims = max(int(img_x * (largest_size_target / (img_y * 1.0))), 1), max(int(largest_size_target), 1)
+    resize(image_path, target_dims, image_format)
