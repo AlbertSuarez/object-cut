@@ -12,6 +12,7 @@ class MultiplexerRemoveTest(BaseTestClass):
         self.img_url_wrong = 'https://example.com/not-existing.jpg'
         self.img_base64_wrong = 'not-a-base64'
         self.img_path = os.path.join('test', 'data', 'person.jpg')
+        self.img_path_big = os.path.join('test', 'data', 'animal-big.jpg')
 
     def test_image_url_background_transparent(self):
         form_data = dict(image_url=self.img_url)
@@ -30,6 +31,14 @@ class MultiplexerRemoveTest(BaseTestClass):
     def test_base64_background_white(self):
         image_base64 = image.encode(self.img_path)
         form_data = dict(image_base64=image_base64, output_format='base64', color_removal='white')
+        response = self.hit_remove(form_data, secret_access=self.secret_access)
+        self.check_status_code(response)
+        self.check_response(response.json())
+        self.check_success(response.json())
+
+    def test_base64_background_big_image(self):
+        image_base64 = image.encode(self.img_path_big)
+        form_data = dict(image_base64=image_base64, output_format='base64')
         response = self.hit_remove(form_data, secret_access=self.secret_access)
         self.check_status_code(response)
         self.check_response(response.json())
