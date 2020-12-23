@@ -5,6 +5,8 @@ ERROR_CODES = {
 }
 ERROR_CODES_DEFAULT = ERROR_CODES['001']
 
+LARGEST_SIZE_INPUT = 2500
+
 TMP_FOLDER = '/tmp'
 
 GCP_PROJECT = 'object-cut-engine'

@@ -5,6 +5,7 @@ import requests
 
 from flask import request
 
+from src import LARGEST_SIZE_INPUT
 from src.utils import image, log, env
 from src.utils.response_maker import make_response
 from src.utils.timer import Timer
@@ -42,6 +43,13 @@ def post():
             if not image_path:
                 return make_response(correlation_id, True, error_id='002')
 
+        with Timer('Extract image dimensions'):
+            original_dimensions = image.get_dimensions(image_path)
+
+        with Timer('Resize down'):
+            if max(original_dimensions) > LARGEST_SIZE_INPUT:
+                image.resize_aspect(image_path, original_dimensions, LARGEST_SIZE_INPUT, image_format='JPEG')
+
         with Timer('Hit inference module'):
             json_body = dict(
                 img=image_path, to_remove=to_remove, color_removal=color_removal, secret_access=env.get_secret_access()
@@ -65,6 +73,10 @@ def post():
                     time.sleep(attempt + 1)
                     if attempt >= 2:
                         return make_response(correlation_id, True, error_id='001')
+
+        with Timer('Resize up'):
+            if max(original_dimensions) > LARGEST_SIZE_INPUT:
+                image.resize(output_image_path, original_dimensions, image_format='PNG')
 
         with Timer('Prepare response'):
             image_url = image_base64 = None
