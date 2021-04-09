@@ -43,6 +43,9 @@ def post():
             if not image_path:
                 return make_response(correlation_id, True, error_id='002')
 
+        with Timer('Rotate image, if needed'):
+            image.rotate(image_path)
+
         with Timer('Extract image dimensions'):
             original_dimensions = image.get_dimensions(image_path)
 
