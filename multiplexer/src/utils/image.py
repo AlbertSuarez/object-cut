@@ -3,7 +3,7 @@ import base64
 import time
 import requests
 
-from PIL import Image, ImageFile
+from PIL import Image, ImageFile, ImageOps
 from src import TMP_FOLDER
 from src.utils import log, storage
 
@@ -104,6 +104,20 @@ def get_dimensions(image_path):
     """
     with Image.open(image_path) as img:
         return img.size
+
+
+def rotate(image_path):
+    """
+    Rotate an image based on meta-data from its path.
+    :param image_path: Image path to retrieve dimensions.
+    :return: Image rotated.
+    """
+    try:
+        with Image.open(image_path) as img:
+            img = ImageOps.exif_transpose(img)
+            img.save(image_path, format=img.format, quality=95)
+    except Exception as e:
+        log.warn(f'Cannot rotate input image: [{e}]')
 
 
 def resize(image_path, target_dimensions, image_format):
