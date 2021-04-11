@@ -12,7 +12,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/AlbertSuarez/object-cut.svg)](https://GitHub.com/AlbertSuarez/object-cut/network/)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/AlbertSuarez/object-cut.svg)](https://github.com/AlbertSuarez/object-cut)
 
-[Website](https://objectcut.com/) | [RapidAPI](https://rapidapi.com/objectcut.api/api/background-removal) | [Demo](https://demo.objectcut.com/) | [Status page](https://status.objectcut.com/)
+[Website](https://objectcut.com/) | [RapidAPI](https://rapidapi.com/objectcut.api/api/background-removal) | [Demo](https://demo.objectcut.com/) | [Status page](https://status.objectcut.com/) | [Paper](https://arxiv.org/abs/2101.04704)
 
 ✂️ _Cut the main object of an image automagically_
 
