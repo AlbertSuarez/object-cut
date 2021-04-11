@@ -51,20 +51,20 @@ async def predict(request: EngineRequest):
             result, error_message = await run(net, image, request.to_remove, request.color_removal)
 
             if result:
-                # Save image
+                # Save mask
                 tmp_file_name = os.path.join(TMP_FOLDER, '{}.png'.format(uuid.uuid4()))
                 result.save(tmp_file_name)
 
                 # Return
-                log.info('Image saved in: {}'.format(tmp_file_name))
-                return dict(error=False, img=tmp_file_name, message=EXAMPLE_MESSAGE_SUCCESS)
+                log.info('Mask saved in: {}'.format(tmp_file_name))
+                return dict(error=False, mask=tmp_file_name, message=EXAMPLE_MESSAGE_SUCCESS)
             else:
-                return dict(error=True, img=None, message=error_message)
+                return dict(error=True, mask=None, message=error_message)
         else:
-            return dict(error=True, img=None, message='Unauthorized.')
+            return dict(error=True, mask=None, message='Unauthorized.')
 
     except Exception as e:
         error_message = 'Error on request: [{}]'.format(e)
         log.error(error_message)
         log.exception(e)
-        return dict(error=True, img=None, message=error_message)
+        return dict(error=True, mask=None, message=error_message)

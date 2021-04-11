@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src import EXAMPLE_IMAGE_PATH, EXAMPLE_MESSAGE_SUCCESS
+from src import EXAMPLE_IMAGE_PATH, EXAMPLE_MASK_PATH, EXAMPLE_MESSAGE_SUCCESS
 
 
 class EngineRequest(BaseModel):
@@ -28,10 +28,10 @@ class EngineResponse(BaseModel):
     """
 
     error: bool
-    img: str
+    mask: str
     message: str
 
     class Config:
         schema_extra = dict(example=dict(
-            error=False, img=EXAMPLE_IMAGE_PATH, message=EXAMPLE_MESSAGE_SUCCESS
+            error=False, mask=EXAMPLE_MASK_PATH, message=EXAMPLE_MESSAGE_SUCCESS
         ))

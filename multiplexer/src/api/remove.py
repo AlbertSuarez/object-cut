@@ -6,7 +6,7 @@ import requests
 from flask import request
 
 from src import LARGEST_SIZE_INPUT
-from src.utils import image, log, env
+from src.utils import image, log, env, crop_mask
 from src.utils.response_maker import make_response
 from src.utils.timer import Timer
 
@@ -55,7 +55,7 @@ def post():
 
         with Timer('Hit inference module'):
             json_body = dict(
-                img=image_path, to_remove=to_remove, color_removal=color_removal, secret_access=env.get_secret_access()
+                img=image_path, secret_access=env.get_secret_access()
             )
             request_headers = dict(Host='inference')
             for attempt in range(3):
@@ -64,7 +64,7 @@ def post():
                     if response.ok:
                         response = response.json()
                         if not response.get('error'):
-                            output_image_path = response.get('img')
+                            output_mask_path = response.get('mask')
                             break
                         else:
                             log.error('Error hitting inference module: [{}]'.format(response.get('message')))
@@ -76,6 +76,9 @@ def post():
                     time.sleep(attempt + 1)
                     if attempt >= 2:
                         return make_response(correlation_id, True, error_id='001')
+
+        with Timer('Crop mask'):
+            output_image_path = crop_mask.crop(image, output_mask_path, to_remove, color_removal)
 
         with Timer('Resize up'):
             if max(original_dimensions) > LARGEST_SIZE_INPUT:
