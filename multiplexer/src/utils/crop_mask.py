@@ -1,8 +1,11 @@
 import cv2
-
+import uuid
 import numpy as np
+
 from scipy import ndimage
 from PIL import Image, ImageOps
+
+from src import TMP_FOLDER
 
 
 def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
@@ -61,4 +64,6 @@ def crop(image, mask_path, to_remove, color_removal):
     output_image = output_image.resize(
         (image_original.width, image_original.height), resample=Image.LANCZOS
     )
-    return output_image
+    tmp_file_name = os.path.join(TMP_FOLDER, '{}.png'.format(uuid.uuid4()))
+    output_image.save(tmp_file_name)
+    return tmp_file_name
