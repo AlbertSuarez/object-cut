@@ -1,3 +1,4 @@
+import os
 import cv2
 import uuid
 import numpy as np
@@ -30,8 +31,8 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
 
 def crop(image, mask_path, to_remove, color_removal):
     """"
-    :param image_original: Input image.
-    :param mask: The mask given by the model.
+    :param image: Input image.
+    :param mask_path: The mask given by the model.
     :param to_remove: Element to remove the input image result.
     :param color_removal: Color from the removed or erased part.
     :return: The output image.
