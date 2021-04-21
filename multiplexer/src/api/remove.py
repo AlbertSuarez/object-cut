@@ -78,7 +78,7 @@ def post():
                         return make_response(correlation_id, True, error_id='001')
 
         with Timer('Crop mask'):
-            output_image_path = crop_mask.crop(image, output_mask_path, to_remove, color_removal)
+            output_image_path = crop_mask.crop(image_path, output_mask_path, to_remove, color_removal)
 
         with Timer('Resize up'):
             if max(original_dimensions) > LARGEST_SIZE_INPUT:
