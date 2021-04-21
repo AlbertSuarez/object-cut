@@ -37,7 +37,7 @@ def crop(image, mask_path, to_remove, color_removal):
     :param color_removal: Color from the removed or erased part.
     :return: The output image.
     """
-    image_original = Image.fromarray(np.uint8(image))
+    image_original = Image.open(image).convert('RGB')
     mask = np.array(Image.open(mask_path))
     # threshold mask
     idx = mask >= 5
@@ -49,7 +49,6 @@ def crop(image, mask_path, to_remove, color_removal):
     mask = cv2.erode(mask, np.ones((3, 3), np.uint8), iterations=1)
     mask = ndimage.gaussian_filter(mask, sigma=(2, 2), order=0)
     mask = unsharp_mask(mask, amount=15.0)
-    
     # Put alpha
     mask = cv2.resize(mask, dsize=image_original.size, interpolation=cv2.INTER_LANCZOS4)
     mask = Image.fromarray(mask).convert('L')
@@ -59,7 +58,6 @@ def crop(image, mask_path, to_remove, color_removal):
         background = Image.new('RGB', mask.size, (255, 255, 255))
     else:
         background = Image.new('RGBA', mask.size, (255, 255, 255, 0))
-    
     # Generate output image with the mask
     output_image = Image.composite(image_original, background, mask)
     output_image = output_image.resize(

@@ -99,7 +99,7 @@ async def run(net, image):
         prediction = prediction.squeeze()
         prediction = prediction.cpu().data.numpy()
         prediction = prediction * 255
-        prediction = Image.fromarray(prediction)
+        prediction = Image.fromarray(prediction).convert('L')
 
         # Clean
         del d1
