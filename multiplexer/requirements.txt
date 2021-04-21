@@ -1,4 +1,5 @@
 connexion[swagger-ui]
+opencv-python
 Flask
 Flask-Cors
 requests
@@ -7,4 +8,6 @@ uwsgitop
 Pillow
 google-auth
 google-cloud-storage
+numpy
+scipy
 tqdm

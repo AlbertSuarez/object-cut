@@ -1,4 +1,5 @@
 connexion==2.7.0
+opencv-python==4.3.0.36
 Flask==1.1.2
 Flask-Cors==3.0.8
 requests==2.24.0
@@ -41,4 +42,6 @@ six==1.15.0
 swagger-ui-bundle==0.0.8
 urllib3==1.25.10
 Werkzeug==1.0.1
+numpy==1.19.1
+scipy==1.5.2
 zipp==3.1.0
